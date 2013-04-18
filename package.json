@@ -1,6 +1,6 @@
 {
   "name": "dargs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Converts an object of options into an array of command-line arguments. Useful when calling command-line tools.",
   "keywords": [
     "options",
@@ -35,5 +35,7 @@
       "type": "MIT"
     }
   ],
-  "files": ["dargs.js"]
+  "files": [
+    "dargs.js"
+  ]
 }
