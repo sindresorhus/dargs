@@ -1,11 +1,15 @@
-# dargs [![Build Status](https://secure.travis-ci.org/sindresorhus/dargs.png?branch=master)](http://travis-ci.org/sindresorhus/dargs)
+# dargs [![Build Status](https://travis-ci.org/sindresorhus/dargs.png?branch=master)](https://travis-ci.org/sindresorhus/dargs)
 
 > Converts an object of options into an array of command-line arguments
 
+Basically the inverse of an argument parser like nopt or minimist.
 
-## Getting started
 
-Install: `npm install --save dargs`
+## Install
+
+```bash
+$ npm install --save dargs
+```
 
 
 #### Example
@@ -38,20 +42,23 @@ console.log(dargs(options, excludes));
 ```
 
 
-## Documentation
+## API
 
+### dargs(options, excludes)
 
-### options
+#### options
 
-Object of options to convert to command-line arguments.
+Type: `Object`
 
+Options to convert to command-line arguments.
 
-### excludes
+#### excludes
 
-Array of keys to exclude.
+Type: `Array`
 
+Keys to exclude.
 
 
 ## License
 
-MIT License • © [Sindre Sorhus](http://sindresorhus.com)
+[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
