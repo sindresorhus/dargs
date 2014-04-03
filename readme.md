@@ -1,4 +1,4 @@
-# dargs [![Build Status](https://travis-ci.org/sindresorhus/dargs.png?branch=master)](https://travis-ci.org/sindresorhus/dargs)
+# dargs [![Build Status](https://travis-ci.org/sindresorhus/dargs.svg?branch=master)](https://travis-ci.org/sindresorhus/dargs)
 
 > Converts an object of options into an array of command-line arguments
 
@@ -12,7 +12,7 @@ $ npm install --save dargs
 ```
 
 
-#### Example
+#### Usage
 
 ```js
 var dargs = require('dargs');
