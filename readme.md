@@ -2,12 +2,12 @@
 
 > Converts an object of options into an array of command-line arguments
 
-Basically the inverse of an argument parser like nopt or minimist.
+Basically the inverse of an argument parser like nopt or minimist. Useful when calling command-line tools.
 
 
 ## Install
 
-```bash
+```sh
 $ npm install --save dargs
 ```
 
@@ -48,17 +48,17 @@ console.log(dargs(options, excludes));
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 Options to convert to command-line arguments.
 
 #### excludes
 
-Type: `Array`
+Type: `array`
 
 Keys to exclude.
 
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT) © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](http://sindresorhus.com)

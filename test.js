@@ -1,8 +1,6 @@
-/*global describe, it */
 'use strict';
 var assert = require('assert');
-var dargs = require('./dargs');
-
+var dargs = require('./');
 
 var fixture = {
 	a: 'foo',

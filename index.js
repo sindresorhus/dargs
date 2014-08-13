@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = function (options, excludes) {
 	var args = [];
 

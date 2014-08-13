@@ -1,7 +1,8 @@
 {
   "name": "dargs",
   "version": "0.1.0",
-  "description": "Converts an object of options into an array of command-line arguments. Useful when calling command-line tools.",
+  "description": "Converts an object of options into an array of command-line arguments",
+  "repository": "sindresorhus/dargs",
   "keywords": [
     "options",
     "arguments",
@@ -9,33 +10,22 @@
     "flags",
     "cli"
   ],
-  "homepage": "https://github.com/sindresorhus/dargs",
-  "bugs": "https://github.com/sindresorhus/dargs/issues",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "http://sindresorhus.com"
   },
-  "main": "dargs.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/sindresorhus/dargs.git"
-  },
   "scripts": {
     "test": "mocha"
   },
   "devDependencies": {
-    "mocha": "~1.9.0"
+    "mocha": "*"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
+  "license": "MIT",
   "files": [
-    "dargs.js"
+    "index.js"
   ]
 }
