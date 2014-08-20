@@ -1,12 +1,13 @@
 'use strict';
 module.exports = function (options, excludes) {
 	var args = [];
+	Array.isArray(excludes) || (excludes = []);
 
 	Object.keys(options).forEach(function (key) {
 		var flag;
 		var val = options[key];
 
-		if (Array.isArray(excludes) && excludes.indexOf(key) !== -1) {
+		if (excludes.indexOf(key) !== -1) {
 			return;
 		}
 
