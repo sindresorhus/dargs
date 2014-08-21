@@ -17,11 +17,11 @@ describe('dargs()', function () {
 	it('convert options to cli flags', function () {
 		var actual = dargs(fixture);
 		var expected = [
-			'--a', 'foo',
+			'--a=foo',
 			'--b',
-			'--d', '5',
-			'--e', 'foo',
-			'--e', 'bar',
+			'--d=5',
+			'--e=foo',
+			'--e=bar',
 			'--camel-case-camel'
 		];
 		assert.deepEqual(actual, expected);
@@ -30,8 +30,8 @@ describe('dargs()', function () {
 	it('exclude options', function () {
 		var actual = dargs(fixture, ['b', 'e']);
 		var expected = [
-			'--a', 'foo',
-			'--d', '5',
+			'--a=foo',
+			'--d=5',
 			'--camel-case-camel'
 		];
 		assert.deepEqual(actual, expected);

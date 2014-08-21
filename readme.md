@@ -32,11 +32,11 @@ console.log(dargs(options, excludes));
 
 /*
 [
-	'--foo', 'bar',
+	'--foo=bar',
 	'--hello',
-	'--camel-case', '5',
-	'--multiple', 'value',
-	'--multiple', 'value2'
+	'--camel-case=5',
+	'--multiple=value',
+	'--multiple=value2'
 ]
 */
 ```

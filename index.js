@@ -17,16 +17,16 @@ module.exports = function (options, excludes) {
 		}
 
 		if (typeof val === 'string') {
-			args.push('--' + flag, val);
+			args.push('--' + flag + '=' + val);
 		}
 
 		if (typeof val === 'number' && isNaN(val) === false) {
-			args.push('--' + flag, '' + val);
+			args.push('--' + flag + '=' + ('' + val));
 		}
 
 		if (Array.isArray(val)) {
 			val.forEach(function (arrVal) {
-				args.push('--' + flag, arrVal);
+				args.push('--' + flag + '=' + arrVal);
 			});
 		}
 	});
