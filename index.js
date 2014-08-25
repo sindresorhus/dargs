@@ -1,32 +1,49 @@
 'use strict';
+
+var escape = function (value) {
+	return value.replace(/'/g, "'\''");
+};
+
+var constructOption = function (name, value) {
+	name = name.replace(/[A-Z]/g, '-$&').toLowerCase();
+
+	var namePrefix = '--';
+	var delimiter = '=';
+	var quote = "'"; // strong quote
+	var valueChunk = '';
+
+	if (value) {
+		valueChunk = delimiter + quote + escape(value) + quote;
+	}
+
+	return namePrefix + name + valueChunk;
+};
+
 module.exports = function (options, excludes) {
 	var args = [];
 
-	Object.keys(options).forEach(function (key) {
-		var flag;
-		var val = options[key];
+	Object.keys(options).forEach(function (name) {
+		var val = options[name];
 
-		if (Array.isArray(excludes) && excludes.indexOf(key) !== -1) {
+		if (Array.isArray(excludes) && excludes.indexOf(name) !== -1) {
 			return;
 		}
 
-		flag = key.replace(/[A-Z]/g, '-$&').toLowerCase();
-
 		if (val === true) {
-			args.push('--' + flag);
+			args.push(constructOption(name));
 		}
 
 		if (typeof val === 'string') {
-			args.push('--' + flag + '=' + val);
+			args.push(constructOption(name, val));
 		}
 
 		if (typeof val === 'number' && isNaN(val) === false) {
-			args.push('--' + flag + '=' + ('' + val));
+			args.push(constructOption(name, '' + val));
 		}
 
 		if (Array.isArray(val)) {
 			val.forEach(function (arrVal) {
-				args.push('--' + flag + '=' + arrVal);
+				args.push(constructOption(name, arrVal));
 			});
 		}
 	});
