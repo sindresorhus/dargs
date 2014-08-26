@@ -7,16 +7,7 @@ var escape = function (value) {
 var constructOption = function (name, value) {
 	name = name.replace(/[A-Z]/g, '-$&').toLowerCase();
 
-	var namePrefix = '--';
-	var delimiter = '=';
-	var quote = "'"; // strong quote
-	var valueChunk = '';
-
-	if (value) {
-		valueChunk = delimiter + quote + escape(value) + quote;
-	}
-
-	return namePrefix + name + valueChunk;
+	return '--' + name + (value ? "='" + escape(value) + "'": '');
 };
 
 module.exports = function (options, excludes) {
