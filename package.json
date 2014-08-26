@@ -8,7 +8,9 @@
     "arguments",
     "args",
     "flags",
-    "cli"
+    "cli",
+    "nopt",
+    "minimist"
   ],
   "author": {
     "name": "Sindre Sorhus",
