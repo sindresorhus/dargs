@@ -6,8 +6,9 @@ var escape = function (value) {
 
 var constructOption = function (name, value) {
 	name = name.replace(/[A-Z]/g, '-$&').toLowerCase();
+	var quotedVal = /\W/.test(value) ? ("'" + escape(value) + "'") : value;
 
-	return '--' + name + (value ? "='" + escape(value) + "'": '');
+	return '--' + name + (value ? "=" + quotedVal : '');
 };
 
 module.exports = function (options, excludes) {
