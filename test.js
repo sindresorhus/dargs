@@ -44,14 +44,14 @@ describe('dargs()', function () {
 	});
 
 	it('unquoted test', function () {
-		var actual = dargs(fixture, [], ['d','e']);
+		var actual = dargs(fixture, [], ['h']);
 		var expected = [
-			"--a='foo'",
+			"--a=foo",
 			"--b",
 			"--d=5",
 			"--e=foo",
 			"--e=bar",
-			"--h='with a space'",
+			"--h=with a space",
 			"--i='let'\''s try quotes'",
 			"--j='test \"different\" quotes'",
 			"--camel-case-camel"
@@ -62,11 +62,11 @@ describe('dargs()', function () {
 	it('different quote character', function () {
 		var actual = dargs(fixture, [], [], '"');
 		var expected = [
-			'--a="foo"',
+			'--a=foo',
 			'--b',
-			'--d="5"',
-			'--e="foo"',
-			'--e="bar"',
+			'--d=5',
+			'--e=foo',
+			'--e=bar',
 			'--h="with a space"',
 			'--i="let\'s try quotes"',
 			'--j="test \\"different\\" quotes"',

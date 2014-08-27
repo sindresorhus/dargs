@@ -49,25 +49,29 @@ var dargs = require('dargs');
 
 var options = {
 	foo: 'bar',
-	hello: true,                    // results in only the key being used
-	cake: false,                    // ignored
-	camelCase: 5,                   // camelCase is slugged to `camel-case`
-	multiple: ['value', 'value2'],  // converted to multiple arguments
+  unicorn: 'rainbows and ponies',  // quoted when more than just a word
+  unicorn2: 'rainbows and ponies', // specifically excluded for quoting in this example
+	hello: true,                     // results in only the key being used
+	cake: false,                     // ignored
+	camelCase: 5,                    // camelCase is slugged to `camel-case`
+	multiple: ['value', 'value2'],   // converted to multiple arguments
 	sad: ':('
 };
 
 var excludes = ['sad'];
-var unquoted = ['camelCase'];
+var unquoted = ['unicorn2'];
 
 console.log(dargs(options, excludes, unquoted, '"'));
 
 /*
 [
-  '--foo="bar"',
+  '--foo=bar',
+  '--unicorn="foo bar"',
+  '--unicorn2=foo bar',
   '--hello',
   '--camel-case=5',
-  '--multiple="value"',
-  '--multiple="value2"' 
+  '--multiple=value',
+  '--multiple=value2' 
 ]
 */
 ```
@@ -98,7 +102,7 @@ Keys which shouldn't be wrapped in quotes.
 
 Type: `string`
 
-Character to use for quoting string, defaults to `'`.
+Character to use for quoting string, defaults to `'`. Can be set to empty string to disable quoting completely.
 
 
 ## License
