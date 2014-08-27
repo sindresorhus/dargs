@@ -12,8 +12,9 @@ var escape = function (value, quote) {
 
 var constructOption = function (name, value, quote) {
 	name = name.replace(/[A-Z]/g, '-$&').toLowerCase();
+	var quotedVal = /\W/.test(value) && quote ? (quote + escape(value, quote) + quote) : value;
 
-	return '--' + name + (value ? "=" + quote + escape(value, quote) + quote: '');
+	return '--' + name + (value ? "=" + quotedVal : '');
 };
 
 module.exports = function (options, excludes, unquoted, quote) {

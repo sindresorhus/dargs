@@ -19,6 +19,7 @@ var dargs = require('dargs');
 
 var options = {
 	foo: 'bar',
+	unicorn: 'rainbows and ponies', // quoted when more than just a word
 	hello: true,                    // results in only the key being used
 	cake: false,                    // ignored
 	camelCase: 5,                   // camelCase is slugged to `camel-case`
@@ -32,11 +33,12 @@ console.log(dargs(options, excludes));
 
 /*
 [
-	"--foo='bar'",
+	"--foo=bar",
+	"--unicorn='rainbows and ponies'"
 	"--hello",
-	"--camel-case='5'",
-	"--multiple='value'",
-	"--multiple='value2'"
+	"--camel-case=5",
+	"--multiple=value",
+	"--multiple=value2"
 ]
 */
 ```
