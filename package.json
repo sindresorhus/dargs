@@ -1,6 +1,6 @@
 {
   "name": "dargs",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Converts an object of options into an array of command-line arguments",
   "repository": "sindresorhus/dargs",
   "keywords": [
