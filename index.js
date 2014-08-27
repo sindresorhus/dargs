@@ -14,10 +14,9 @@ var constructOption = function (name, value) {
 	return '--' + name + (value ? "='" + escape(value) + "'": '');
 };
 
-module.exports = function (options, excludes) {
+module.exports = function (options, excludes, preferences) {
 	var args = [];
-	var funcArgs = [].slice.call(arguments);
-	var unquote = (typeof funcArgs[2] === 'object' && funcArgs[2].unquote) ? true : false;
+	var unquote = (typeof preferences === 'object' && preferences.unquote) ? true : false;
 
 	Object.keys(options).forEach(function (name) {
 		var val = options[name];

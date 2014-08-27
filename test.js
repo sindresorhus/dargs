@@ -14,7 +14,10 @@ var fixture = {
 	i: "let's try quotes",
 	j: ['with a space', '5', 'foo'],
 	camelCaseCamel: true
+};
 
+var preferences = {
+	unquote: true
 };
 
 describe('dargs()', function () {
@@ -47,7 +50,7 @@ describe('dargs()', function () {
 	});
 
 	it('returns unquoted', function () {
-		var actual = dargs(fixture, ['b', 'i', 'camelCaseCamel'], {unquote: true});
+		var actual = dargs(fixture, ['b', 'i', 'camelCaseCamel'], preferences);
 		var expected = [
 			"--a=foo",
 			"--d=5",

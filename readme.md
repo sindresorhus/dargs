@@ -28,6 +28,10 @@ var options = {
 
 var excludes = ['sad'];
 
+var preferences = {
+	unquote: true
+};
+
 console.log(dargs(options, excludes));
 
 /*
@@ -39,11 +43,8 @@ console.log(dargs(options, excludes));
 	"--multiple='value2'"
 ]
 */
-```
----
-#### Using `{unquote: true}`
-```
-console.log(dargs(options, excludes, {unquote: true}));
+
+console.log(dargs(options, excludes, preferences));
 /*
 [
 	"--foo=bar",
@@ -72,9 +73,11 @@ Type: `array`
 
 Keys to exclude.
 
-#### unquote
+#### preferences
 
 Type: `object`
+
+Key: `unquote` Default Value: `false` Type: `boolean`  
 
 To remove quotes from arguments
 
