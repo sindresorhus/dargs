@@ -12,7 +12,12 @@ var fixture = {
 	g: undefined,
 	h: 'with a space',
 	i: "let's try quotes",
+	j: ['with a space', '5', 'foo'],
 	camelCaseCamel: true
+};
+
+var preferences = {
+	unquote: true
 };
 
 describe('dargs()', function () {
@@ -26,17 +31,35 @@ describe('dargs()', function () {
 			"--e=bar",
 			"--h='with a space'",
 			"--i='let'\''s try quotes'",
+			"--j='with a space'",
+			"--j='5'",
+			"--j='foo'",
 			"--camel-case-camel"
 		];
 		assert.deepEqual(actual, expected);
 	});
 
 	it('exclude options', function () {
-		var actual = dargs(fixture, ['b', 'e', 'h', 'i']);
+		var actual = dargs(fixture, ['b', 'e', 'h', 'i', 'j']);
 		var expected = [
 			"--a=foo",
 			"--d=5",
 			"--camel-case-camel"
+		];
+		assert.deepEqual(actual, expected);
+	});
+
+	it('returns unquoted', function () {
+		var actual = dargs(fixture, ['b', 'i', 'camelCaseCamel'], preferences);
+		var expected = [
+			"--a=foo",
+			"--d=5",
+			"--e=foo",
+			"--e=bar",
+			"--h='with a space'",
+			"--j='with a space'",
+			"--j=5",
+			"--j=foo"
 		];
 		assert.deepEqual(actual, expected);
 	});

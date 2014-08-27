@@ -29,6 +29,10 @@ var options = {
 
 var excludes = ['sad'];
 
+var preferences = {
+	unquote: true
+};
+
 console.log(dargs(options, excludes));
 
 /*
@@ -41,8 +45,19 @@ console.log(dargs(options, excludes));
 	"--multiple=value2"
 ]
 */
-```
 
+console.log(dargs(options, excludes, preferences));
+/*
+[
+	"--foo=bar",
+	"--hello",
+	"--camel-case=5",
+	"--multiple=value",
+	"--multiple=value2"
+]
+*/
+
+```
 
 ## API
 
@@ -59,6 +74,16 @@ Options to convert to command-line arguments.
 Type: `array`
 
 Keys to exclude.
+
+#### preferences
+
+Type: `object`
+
+Key: `unquote` Default Value: `false` Type: `boolean`  
+
+To remove quotes from arguments
+
+
 
 
 ## License
