@@ -41,7 +41,7 @@ console.log(dargs(options, excludes));
 */
 ```
 
-## Another example
+#### Usage example #2
 ```js
 var dargs = require('dargs');
 
