@@ -43,10 +43,42 @@ console.log(dargs(options, excludes));
 */
 ```
 
+#### Usage example #2
+```js
+var dargs = require('dargs');
+
+var options = {
+	foo: 'bar',
+  unicorn: 'rainbows and ponies',  // quoted when more than just a word
+  unicorn2: 'rainbows and ponies', // specifically excluded for quoting in this example
+	hello: true,                     // results in only the key being used
+	cake: false,                     // ignored
+	camelCase: 5,                    // camelCase is slugged to `camel-case`
+	multiple: ['value', 'value2'],   // converted to multiple arguments
+	sad: ':('
+};
+
+var excludes = ['sad'];
+var unquoted = ['unicorn2'];
+
+console.log(dargs(options, excludes, unquoted, '"'));
+
+/*
+[
+  '--foo=bar',
+  '--unicorn="foo bar"',
+  '--unicorn2=foo bar',
+  '--hello',
+  '--camel-case=5',
+  '--multiple=value',
+  '--multiple=value2' 
+]
+*/
+```
 
 ## API
 
-### dargs(options, excludes)
+### dargs(options, excludes, unquoted, quote)
 
 #### options
 
@@ -59,6 +91,18 @@ Options to convert to command-line arguments.
 Type: `array`
 
 Keys to exclude.
+
+#### unquoted
+
+Type: `array`
+
+Keys which shouldn't be wrapped in quotes.
+
+#### quote
+
+Type: `string`
+
+Character to use for quoting string, defaults to `'`. Can be set to empty string to disable quoting completely.
 
 
 ## License
