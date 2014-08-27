@@ -17,8 +17,11 @@ var constructOption = function (name, value, quote) {
 };
 
 module.exports = function (options, excludes, unquoted, quote) {
+	if(quote === undefined) {
+		quote = "'";
+	}
+
 	var args = [];
-	quote = quote || "'";
 
 	Object.keys(options).forEach(function (name) {
 		var val = options[name];
