@@ -1,7 +1,7 @@
 {
   "name": "dargs",
   "version": "2.0.3",
-  "description": "Converts an object of options into an array of command-line arguments",
+  "description": "Convert an object of options into an array of command-line arguments",
   "repository": "sindresorhus/dargs",
   "keywords": [
     "options",
@@ -10,7 +10,11 @@
     "flags",
     "cli",
     "nopt",
-    "minimist"
+    "minimist",
+    "bin",
+    "binary",
+    "command",
+    "cmd"
   ],
   "author": {
     "name": "Sindre Sorhus",
