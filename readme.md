@@ -27,6 +27,7 @@ var options = {
 };
 
 var excludes = ['sad'];
+var includes = ['camelCase', 'multiple', 'sad'];
 
 console.log(dargs(options, excludes));
 
@@ -39,12 +40,33 @@ console.log(dargs(options, excludes));
 	"--multiple=value2"
 ]
 */
-```
 
+console.log(dargs(options, excludes, includes));
+
+/*
+[
+	"--camel-case=5",
+	"--multiple=value",
+	"--multiple=value2"
+]
+*/
+
+
+console.log(dargs(options, [], includes));
+
+/*
+[
+	"--camel-case=5",
+	"--multiple=value",
+	"--multiple=value2",
+	"--sad=:("
+]
+*/
+```
 
 ## API
 
-### dargs(options, excludes)
+### dargs(options, excludes, includes)
 
 #### options
 
@@ -58,6 +80,11 @@ Type: `array`
 
 Keys to exclude.
 
+#### includes
+
+Type: `array`
+
+Keys to include. (if a key is in both `excludes` and `includes`, it will be excluded)
 
 ## License
 

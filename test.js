@@ -39,3 +39,25 @@ it('exclude options', function () {
 	];
 	assert.deepEqual(actual, expected);
 });
+
+it('includes options', function() {
+	var actual = dargs(fixture, [], ['a', 'c', 'd', 'e', 'camelCaseCamel']);
+	var expected = [
+		"--a=foo",
+		"--d=5",
+		"--e=foo",
+		"--e=bar",
+		"--camel-case-camel"
+	];
+	assert.deepEqual(actual, expected);
+});
+
+it('excludes and includes options', function() {
+	var actual = dargs(fixture, ['a', 'd'], ['a', 'c', 'd', 'e', 'camelCaseCamel']);
+	var expected = [
+		"--e=foo",
+		"--e=bar",
+		"--camel-case-camel"
+	];
+	assert.deepEqual(actual, expected);
+});
