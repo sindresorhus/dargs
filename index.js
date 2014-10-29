@@ -5,13 +5,17 @@ function createArg(key, val) {
 	return '--' + key + (val ? '=' + val : '');
 };
 
-module.exports = function (opts, excludes) {
+module.exports = function (opts, excludes, includes) {
 	var args = [];
 
 	Object.keys(opts).forEach(function (key) {
 		var val = opts[key];
 
 		if (Array.isArray(excludes) && excludes.indexOf(key) !== -1) {
+			return;
+		}
+
+		if (Array.isArray(includes) && includes.indexOf(key) === -1) {
 			return;
 		}
 
