@@ -30,36 +30,33 @@ var excludes = ['sad'];
 var includes = ['camelCase', 'multiple', 'sad'];
 
 console.log(dargs(options, excludes));
-
 /*
 [
-	"--foo=bar",
-	"--hello",
-	"--camel-case=5",
-	"--multiple=value",
-	"--multiple=value2"
+	'--foo=bar',
+	'--hello',
+	'--camel-case=5',
+	'--multiple=value',
+	'--multiple=value2'
 ]
 */
 
 console.log(dargs(options, excludes, includes));
-
 /*
 [
-	"--camel-case=5",
-	"--multiple=value",
-	"--multiple=value2"
+	'--camel-case=5',
+	'--multiple=value',
+	'--multiple=value2'
 ]
 */
 
 
 console.log(dargs(options, [], includes));
-
 /*
 [
-	"--camel-case=5",
-	"--multiple=value",
-	"--multiple=value2",
-	"--sad=:("
+	'--camel-case=5',
+	'--multiple=value',
+	'--multiple=value2',
+	'--sad=:(''
 ]
 */
 ```
@@ -78,13 +75,14 @@ Options to convert to command-line arguments.
 
 Type: `array`
 
-Keys to exclude.
+Keys to exclude.  
+Takes precedence over `includes`.
 
 #### includes
 
 Type: `array`
 
-Keys to include. (if a key is in both `excludes` and `includes`, it will be excluded)
+Keys to include.
 
 ## License
 
