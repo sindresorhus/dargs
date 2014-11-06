@@ -1,5 +1,6 @@
 'use strict';
-var assert = require('assert');
+var deepEqual = require('array-equal');
+var test = require('ava');
 var dargs = require('./');
 
 var fixture = {
@@ -15,7 +16,7 @@ var fixture = {
 	camelCaseCamel: true
 };
 
-it('convert options to cli flags', function () {
+test('convert options to cli flags', function (t) {
 	var actual = dargs(fixture);
 	var expected = [
 		'--a=foo',
@@ -28,10 +29,11 @@ it('convert options to cli flags', function () {
 		'--i=let\'s try quotes',
 		'--camel-case-camel'
 	];
-	assert.deepEqual(actual, expected);
+	t.assert(deepEqual(actual, expected));
+	t.end();
 });
 
-it('exclude options', function () {
+test('exclude options', function (t) {
 	var actual = dargs(fixture, ['b', 'e', 'h', 'i']);
 	var expected = [
 		'--a=foo',
@@ -39,10 +41,11 @@ it('exclude options', function () {
 		'--d=5',
 		'--camel-case-camel'
 	];
-	assert.deepEqual(actual, expected);
+	t.assert(deepEqual(actual, expected));
+	t.end();
 });
 
-it('includes options', function () {
+test('includes options', function (t) {
 	var actual = dargs(fixture, [], ['a', 'c', 'd', 'e', 'camelCaseCamel']);
 	var expected = [
 		'--a=foo',
@@ -52,10 +55,11 @@ it('includes options', function () {
 		'--e=bar',
 		'--camel-case-camel'
 	];
-	assert.deepEqual(actual, expected);
+	t.assert(deepEqual(actual, expected));
+	t.end();
 });
 
-it('excludes and includes options', function () {
+test('excludes and includes options', function (t) {
 	var actual = dargs(fixture, ['a', 'd'], ['a', 'c', 'd', 'e', 'camelCaseCamel']);
 	var expected = [
 		'--no-c',
@@ -63,5 +67,6 @@ it('excludes and includes options', function () {
 		'--e=bar',
 		'--camel-case-camel'
 	];
-	assert.deepEqual(actual, expected);
+	t.assert(deepEqual(actual, expected));
+	t.end();
 });
