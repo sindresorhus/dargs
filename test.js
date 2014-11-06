@@ -20,6 +20,7 @@ it('convert options to cli flags', function () {
 	var expected = [
 		'--a=foo',
 		'--b',
+		'--no-c',
 		'--d=5',
 		'--e=foo',
 		'--e=bar',
@@ -34,6 +35,7 @@ it('exclude options', function () {
 	var actual = dargs(fixture, ['b', 'e', 'h', 'i']);
 	var expected = [
 		'--a=foo',
+		'--no-c',
 		'--d=5',
 		'--camel-case-camel'
 	];
@@ -44,6 +46,7 @@ it('includes options', function () {
 	var actual = dargs(fixture, [], ['a', 'c', 'd', 'e', 'camelCaseCamel']);
 	var expected = [
 		'--a=foo',
+		'--no-c',
 		'--d=5',
 		'--e=foo',
 		'--e=bar',
@@ -55,6 +58,7 @@ it('includes options', function () {
 it('excludes and includes options', function () {
 	var actual = dargs(fixture, ['a', 'd'], ['a', 'c', 'd', 'e', 'camelCaseCamel']);
 	var expected = [
+		'--no-c',
 		'--e=foo',
 		'--e=bar',
 		'--camel-case-camel'

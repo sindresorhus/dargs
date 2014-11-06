@@ -23,6 +23,10 @@ module.exports = function (opts, excludes, includes) {
 			args.push(createArg(key));
 		}
 
+		if (val === false) {
+			args.push(createArg('no-' + key));
+		}
+
 		if (typeof val === 'string') {
 			args.push(createArg(key, val));
 		}
