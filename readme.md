@@ -20,7 +20,7 @@ var dargs = require('dargs');
 var options = {
 	foo: 'bar',
 	hello: true,                    // results in only the key being used
-	cake: false,                    // ignored
+	cake: false,                    // prepends `no-` before the key
 	camelCase: 5,                   // camelCase is slugged to `camel-case`
 	multiple: ['value', 'value2'],  // converted to multiple arguments
 	sad: ':('
@@ -34,6 +34,7 @@ console.log(dargs(options, excludes));
 [
 	'--foo=bar',
 	'--hello',
+	'--no-cake',
 	'--camel-case=5',
 	'--multiple=value',
 	'--multiple=value2'
