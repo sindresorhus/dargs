@@ -22,10 +22,11 @@
     "url": "http://sindresorhus.com"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "node test.js"
   },
   "devDependencies": {
-    "mocha": "*"
+    "array-equal": "^1.0.0",
+    "ava": "^0.0.4"
   },
   "engines": {
     "node": ">=0.10.0"
