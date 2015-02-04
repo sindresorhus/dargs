@@ -1,13 +1,13 @@
 # dargs [![Build Status](https://travis-ci.org/sindresorhus/dargs.svg?branch=master)](https://travis-ci.org/sindresorhus/dargs)
 
-> Convert an object of options into an array of command-line arguments
+> Reverse [`minimist`](https://github.com/substack/minimist). Convert an object of options into an array of command-line arguments.
 
-Basically the inverse of an argument parser like minimist. Useful when spawning command-line tools.
+Useful when spawning command-line tools.
 
 
 ## Install
 
-```sh
+```
 $ npm install --save dargs
 ```
 
@@ -84,6 +84,7 @@ Takes precedence over `includes`.
 Type: `array`
 
 Keys to include.
+
 
 ## License
 
