@@ -17,7 +17,7 @@ $ npm install --save dargs
 ```js
 var dargs = require('dargs');
 
-var options = {
+var input = {
 	foo: 'bar',
 	hello: true,                    // results in only the key being used
 	cake: false,                    // prepends `no-` before the key
@@ -29,7 +29,7 @@ var options = {
 var excludes = ['sad'];
 var includes = ['camelCase', 'multiple', 'sad'];
 
-console.log(dargs(options, excludes));
+console.log(dargs(input, {excludes: excludes}));
 /*
 [
 	'--foo=bar',
@@ -41,7 +41,10 @@ console.log(dargs(options, excludes));
 ]
 */
 
-console.log(dargs(options, excludes, includes));
+console.log(dargs(input, {
+	excludes: excludes,
+	includes: includes
+}));
 /*
 [
 	'--camel-case=5',
@@ -51,7 +54,7 @@ console.log(dargs(options, excludes, includes));
 */
 
 
-console.log(dargs(options, [], includes));
+console.log(dargs(input, {includes: includes}));
 /*
 [
 	'--camel-case=5',
@@ -64,26 +67,37 @@ console.log(dargs(options, [], includes));
 
 ## API
 
-### dargs(options, excludes, includes)
+### dargs(input, options)
+
+#### input
+
+*Required*  
+Type: `object`
+
+Object to convert to command-line arguments.
 
 #### options
 
 Type: `object`
 
-Options to convert to command-line arguments.
-
-#### excludes
+##### excludes
 
 Type: `array`
 
-Keys to exclude.  
-Takes precedence over `includes`.
+Keys to exclude. Takes precedence over `includes`.
 
-#### includes
+##### includes
 
 Type: `array`
 
 Keys to include.
+
+##### ignoreFalse
+
+Type: `boolean`  
+Default: `false`
+
+Don't include `false` values. This is mostly useful when dealing with strict argument parsers that would throw on unknown arguments like `--no-foo`.
 
 
 ## License

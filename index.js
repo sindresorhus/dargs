@@ -5,17 +5,19 @@ function createArg(key, val) {
 	return '--' + key + (val ? '=' + val : '');
 };
 
-module.exports = function (opts, excludes, includes) {
+module.exports = function (input, opts) {
 	var args = [];
 
-	Object.keys(opts).forEach(function (key) {
-		var val = opts[key];
+	opts = opts || {};
 
-		if (Array.isArray(excludes) && excludes.indexOf(key) !== -1) {
+	Object.keys(input).forEach(function (key) {
+		var val = input[key];
+
+		if (Array.isArray(opts.excludes) && opts.excludes.indexOf(key) !== -1) {
 			return;
 		}
 
-		if (Array.isArray(includes) && includes.indexOf(key) === -1) {
+		if (Array.isArray(opts.includes) && opts.includes.indexOf(key) === -1) {
 			return;
 		}
 
@@ -23,7 +25,7 @@ module.exports = function (opts, excludes, includes) {
 			args.push(createArg(key));
 		}
 
-		if (val === false) {
+		if (val === false && !opts.ignoreFalse) {
 			args.push(createArg('no-' + key));
 		}
 
