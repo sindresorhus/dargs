@@ -33,6 +33,9 @@
   "scripts": {
     "test": "node test.js"
   },
+  "dependencies": {
+    "number-is-nan": "^1.0.0"
+  },
   "devDependencies": {
     "array-equal": "^1.0.0",
     "ava": "^0.0.4"

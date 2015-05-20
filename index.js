@@ -1,4 +1,5 @@
 'use strict';
+var numberIsNan = require('number-is-nan');
 
 function createArg(key, val) {
 	key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
@@ -33,7 +34,7 @@ module.exports = function (input, opts) {
 			args.push(createArg(key, val));
 		}
 
-		if (typeof val === 'number' && isNaN(val) === false) {
+		if (typeof val === 'number' && !numberIsNan(val)) {
 			args.push(createArg(key, '' + val));
 		}
 
