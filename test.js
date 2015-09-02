@@ -90,7 +90,7 @@ test('excludes and includes options', function (t) {
 	t.end();
 });
 
-test('translateCamelCase option', function(t) {
+test('keepCamelCase option', function(t) {
 	var actual = dargs(fixture, {
 		keepCamelCase: true,
 		excludes: ['foo']
