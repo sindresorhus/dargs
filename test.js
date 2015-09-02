@@ -74,6 +74,25 @@ test('excludes and includes options', function (t) {
 	t.end();
 });
 
+test('translateCamelCase option', function(t) {
+	var actual = dargs(fixture, {
+		translateCamelCase: false
+	});
+	var expected = [
+		'--a=foo',
+		'--b',
+		'--no-c',
+		'--d=5',
+		'--e=foo',
+		'--e=bar',
+		'--h=with a space',
+		'--i=let\'s try quotes',
+		'--camelCaseCamel'
+	];
+	t.assert(deepEqual(actual, expected));
+	t.end();
+});
+
 test('option to ignore false values', function (t) {
 	var actual = dargs({foo: false}, {ignoreFalse: true});
 	t.assert(deepEqual(actual, []));
