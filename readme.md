@@ -99,6 +99,12 @@ Default: `false`
 
 Don't include `false` values. This is mostly useful when dealing with strict argument parsers that would throw on unknown arguments like `--no-foo`.
 
+##### translateCamelCase
+
+Type: `boolean`  
+Default: `false`
+
+Translate camel case (someProp -> some-prop)
 
 ## License
 

@@ -1,15 +1,19 @@
 'use strict';
 var numberIsNan = require('number-is-nan');
 
-function createArg(key, val) {
-	key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
+function createArg(key, val, cc) {
+	if(cc) {
+		key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
+	}
+
 	return '--' + key + (val ? '=' + val : '');
-};
+}
 
 module.exports = function (input, opts) {
 	var args = [];
 
 	opts = opts || {};
+	var cc = opts.translateCamelCase;
 
 	Object.keys(input).forEach(function (key) {
 		var val = input[key];
@@ -23,24 +27,24 @@ module.exports = function (input, opts) {
 		}
 
 		if (val === true) {
-			args.push(createArg(key));
+			args.push(createArg(key, null, cc));
 		}
 
 		if (val === false && !opts.ignoreFalse) {
-			args.push(createArg('no-' + key));
+			args.push(createArg('no-' + key, cc));
 		}
 
 		if (typeof val === 'string') {
-			args.push(createArg(key, val));
+			args.push(createArg(key, val, cc));
 		}
 
 		if (typeof val === 'number' && !numberIsNan(val)) {
-			args.push(createArg(key, '' + val));
+			args.push(createArg(key, '' + val, cc));
 		}
 
 		if (Array.isArray(val)) {
 			val.forEach(function (arrVal) {
-				args.push(createArg(key, arrVal));
+				args.push(createArg(key, arrVal, cc));
 			});
 		}
 	});
