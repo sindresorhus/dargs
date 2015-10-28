@@ -49,12 +49,25 @@ module.exports = function (input, opts) {
 		}
 	});
 
-	if (Array.isArray(input._) &&
+	if ('_' in input &&
 		!(Array.isArray(opts.excludes) && opts.excludes.indexOf('_') !== -1) &&
 		!(Array.isArray(opts.includes) && opts.includes.indexOf('_') === -1)) {
-		input._.forEach(function (arrVal) {
-			args.push(arrVal);
-		})
+
+		var val = input._;
+
+		if (typeof val === 'string') {
+			args.push(val);
+		}
+
+		if (typeof val === 'number' && !numberIsNan(val)) {
+			args.push('' + val);
+		}
+
+		if (Array.isArray(val)) {
+			val.forEach(function (arrVal) {
+				args.push(arrVal);
+			});
+		}
 	}
 
 	return args;
