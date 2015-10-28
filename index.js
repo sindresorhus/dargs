@@ -14,6 +14,10 @@ module.exports = function (input, opts) {
 	Object.keys(input).forEach(function (key) {
 		var val = input[key];
 
+		if (key === '_') {
+			return;
+		}
+
 		if (Array.isArray(opts.excludes) && opts.excludes.indexOf(key) !== -1) {
 			return;
 		}
@@ -44,6 +48,27 @@ module.exports = function (input, opts) {
 			});
 		}
 	});
+
+	if ('_' in input &&
+		!(Array.isArray(opts.excludes) && opts.excludes.indexOf('_') !== -1) &&
+		!(Array.isArray(opts.includes) && opts.includes.indexOf('_') === -1)) {
+
+		var val = input._;
+
+		if (typeof val === 'string') {
+			args.push(val);
+		}
+
+		if (typeof val === 'number' && !numberIsNan(val)) {
+			args.push('' + val);
+		}
+
+		if (Array.isArray(val)) {
+			val.forEach(function (arrVal) {
+				args.push(arrVal);
+			});
+		}
+	}
 
 	return args;
 };
