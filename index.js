@@ -14,6 +14,10 @@ module.exports = function (input, opts) {
 	Object.keys(input).forEach(function (key) {
 		var val = input[key];
 
+		if (key === '_') {
+			return;
+		}
+
 		if (Array.isArray(opts.excludes) && opts.excludes.indexOf(key) !== -1) {
 			return;
 		}
@@ -44,6 +48,14 @@ module.exports = function (input, opts) {
 			});
 		}
 	});
+
+	if (Array.isArray(input._) &&
+		!(Array.isArray(opts.excludes) && opts.excludes.indexOf('_') !== -1) &&
+		!(Array.isArray(opts.includes) && opts.includes.indexOf('_') === -1)) {
+		input._.forEach(function (arrVal) {
+			args.push(arrVal);
+		})
+	}
 
 	return args;
 };

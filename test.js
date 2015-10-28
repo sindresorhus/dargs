@@ -4,6 +4,7 @@ var test = require('ava');
 var dargs = require('./');
 
 var fixture = {
+	_: ['some', 'option'],
 	a: 'foo',
 	b: true,
 	c: false,
@@ -27,7 +28,9 @@ test('convert options to cli flags', function (t) {
 		'--e=bar',
 		'--h=with a space',
 		'--i=let\'s try quotes',
-		'--camel-case-camel'
+		'--camel-case-camel',
+		'some',
+		'option'
 	];
 	t.assert(deepEqual(actual, expected));
 	t.end();
@@ -39,7 +42,9 @@ test('exclude options', function (t) {
 		'--a=foo',
 		'--no-c',
 		'--d=5',
-		'--camel-case-camel'
+		'--camel-case-camel',
+		'some',
+		'option'
 	];
 	t.assert(deepEqual(actual, expected));
 	t.end();
