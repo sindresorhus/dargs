@@ -60,7 +60,7 @@ console.log(dargs(input, {includes: includes}));
 	'--camel-case=5',
 	'--multiple=value',
 	'--multiple=value2',
-	'--sad=:(''
+	'--sad=:('
 ]
 */
 ```
