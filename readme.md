@@ -29,6 +29,7 @@ const input = {
 
 const excludes = ['sad', /.*Kind$/];  // excludes and includes accept regular expressions
 const includes = ['camelCase', 'multiple', 'sad', /^pie.*/];
+const aliases = {file: 'f'};
 
 console.log(dargs(input, {excludes: excludes}));
 /*
@@ -61,8 +62,24 @@ console.log(dargs(input, {includes: includes}));
 	'--camel-case=5',
 	'--multiple=value',
 	'--multiple=value2',
-	'--sad=:(',
-	'--pie-kind=cherry'
+	'--pie-kind=cherry',
+	'--sad=:('
+]
+*/
+
+
+console.log(dargs({
+	foo: 'bar',
+	hello: true,
+	file: 'baz'
+}, {
+	aliases: aliases
+}));
+/*
+[
+	'--foo=bar',
+	'--hello',
+	'-f baz'
 ]
 */
 ```
@@ -93,6 +110,12 @@ Keys or regex of keys to exclude. Takes precedence over `includes`.
 Type: `array`
 
 Keys or regex of keys to include.
+
+##### aliases
+
+Type: `object`
+
+Maps keys in `input` to an aliased name. Matching keys are converted to options with a single dash ("-") in front of the aliased name and a space separating the aliased name from the value. Keys are still affected by `includes` and `excludes`.
 
 ##### ignoreFalse
 

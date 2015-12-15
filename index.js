@@ -12,6 +12,10 @@ function match(arr, val) {
 	});
 }
 
+function createAliasArg(key, val) {
+	return '-' + key + (val ? ' ' + val : '');
+}
+
 module.exports = function (input, opts) {
 	var args = [];
 
@@ -19,6 +23,7 @@ module.exports = function (input, opts) {
 
 	Object.keys(input).forEach(function (key) {
 		var val = input[key];
+		var argFn = createArg;
 
 		if (Array.isArray(opts.excludes) && match(opts.excludes, key)) {
 			return;
@@ -28,25 +33,30 @@ module.exports = function (input, opts) {
 			return;
 		}
 
+		if (typeof opts.aliases === 'object' && opts.aliases[key]) {
+			key = opts.aliases[key];
+			argFn = createAliasArg;
+		}
+
 		if (val === true) {
-			args.push(createArg(key));
+			args.push(argFn(key, ''));
 		}
 
 		if (val === false && !opts.ignoreFalse) {
-			args.push(createArg('no-' + key));
+			args.push(argFn('no-' + key));
 		}
 
 		if (typeof val === 'string') {
-			args.push(createArg(key, val));
+			args.push(argFn(key, val));
 		}
 
 		if (typeof val === 'number' && !numberIsNan(val)) {
-			args.push(createArg(key, String(val)));
+			args.push(argFn(key, String(val)));
 		}
 
 		if (Array.isArray(val)) {
 			val.forEach(function (arrVal) {
-				args.push(createArg(key, arrVal));
+				args.push(argFn(key, arrVal));
 			});
 		}
 	});
