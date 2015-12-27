@@ -6,6 +6,14 @@ function createArg(key, val) {
 	return '--' + key + (val ? '=' + val : '');
 }
 
+function match(arr, value) {
+	return arr.some(function (toMatch) {
+		return toMatch instanceof RegExp ?
+			toMatch.test(value) :
+			toMatch === value;
+	});
+}
+
 module.exports = function (input, opts) {
 	var args = [];
 
@@ -14,11 +22,11 @@ module.exports = function (input, opts) {
 	Object.keys(input).forEach(function (key) {
 		var val = input[key];
 
-		if (Array.isArray(opts.excludes) && opts.excludes.indexOf(key) !== -1) {
+		if (Array.isArray(opts.excludes) && match(opts.excludes, key)) {
 			return;
 		}
 
-		if (Array.isArray(opts.includes) && opts.includes.indexOf(key) === -1) {
+		if (Array.isArray(opts.includes) && !match(opts.includes, key)) {
 			return;
 		}
 

@@ -29,7 +29,7 @@ test('convert options to cli flags', t => {
 });
 
 test('exclude options', t => {
-	t.same(fn(fixture, {excludes: ['b', 'e', 'h', 'i']}), [
+	t.same(fn(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
 		'--a=foo',
 		'--no-c',
 		'--d=5',
@@ -38,7 +38,7 @@ test('exclude options', t => {
 });
 
 test('includes options', t => {
-	t.same(fn(fixture, {includes: ['a', 'c', 'd', 'e', 'camelCaseCamel']}), [
+	t.same(fn(fixture, {includes: ['a', 'c', 'd', 'e', /^camelCase.*/]}), [
 		'--a=foo',
 		'--no-c',
 		'--d=5',
@@ -51,7 +51,7 @@ test('includes options', t => {
 test('excludes and includes options', t => {
 	t.same(fn(fixture, {
 		excludes: ['a', 'd'],
-		includes: ['a', 'c', 'd', 'e', 'camelCaseCamel']
+		includes: ['a', 'c', /^[de]$/, 'camelCaseCamel']
 	}), [
 		'--no-c',
 		'--e=foo',
