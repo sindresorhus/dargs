@@ -15,9 +15,9 @@ $ npm install --save dargs
 #### Usage
 
 ```js
-var dargs = require('dargs');
+const dargs = require('dargs');
 
-var input = {
+const input = {
 	foo: 'bar',
 	hello: true,                    // results in only the key being used
 	cake: false,                    // prepends `no-` before the key
@@ -26,8 +26,8 @@ var input = {
 	sad: ':('
 };
 
-var excludes = ['sad'];
-var includes = ['camelCase', 'multiple', 'sad'];
+const excludes = ['sad'];
+const includes = ['camelCase', 'multiple', 'sad'];
 
 console.log(dargs(input, {excludes: excludes}));
 /*

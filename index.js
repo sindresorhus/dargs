@@ -4,7 +4,7 @@ var numberIsNan = require('number-is-nan');
 function createArg(key, val) {
 	key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
 	return '--' + key + (val ? '=' + val : '');
-};
+}
 
 module.exports = function (input, opts) {
 	var args = [];
@@ -35,7 +35,7 @@ module.exports = function (input, opts) {
 		}
 
 		if (typeof val === 'number' && !numberIsNan(val)) {
-			args.push(createArg(key, '' + val));
+			args.push(createArg(key, String(val)));
 		}
 
 		if (Array.isArray(val)) {
