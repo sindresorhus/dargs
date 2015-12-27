@@ -23,11 +23,12 @@ var input = {
 	cake: false,                    // prepends `no-` before the key
 	camelCase: 5,                   // camelCase is slugged to `camel-case`
 	multiple: ['value', 'value2'],  // converted to multiple arguments
+	cakeKind: 'strawberry',
 	sad: ':('
 };
 
-var excludes = ['sad'];
-var includes = ['camelCase', 'multiple', 'sad'];
+var excludes = ['sad', '*Kind'];  // excludes and includes accept globs
+var includes = ['camelCase', 'multiple', 'sad', 'cake*'];
 
 console.log(dargs(input, {excludes: excludes}));
 /*
@@ -60,7 +61,8 @@ console.log(dargs(input, {includes: includes}));
 	'--camel-case=5',
 	'--multiple=value',
 	'--multiple=value2',
-	'--sad=:('
+	'--sad=:(',
+	'--cake-kind=strawberry'
 ]
 */
 ```
@@ -84,13 +86,13 @@ Type: `object`
 
 Type: `array`
 
-Keys to exclude. Takes precedence over `includes`.
+Keys or [globs](https://github.com/isaacs/minimatch#usage) to exclude. Takes precedence over `includes`.
 
 ##### includes
 
 Type: `array`
 
-Keys to include.
+Keys or [globs](https://github.com/isaacs/minimatch#usage) to include.
 
 ##### ignoreFalse
 

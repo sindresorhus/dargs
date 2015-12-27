@@ -34,7 +34,8 @@
     "test": "node test.js"
   },
   "dependencies": {
-    "number-is-nan": "^1.0.0"
+    "number-is-nan": "^1.0.0",
+    "minimatch": "^3.0.0"
   },
   "devDependencies": {
     "array-equal": "^1.0.0",

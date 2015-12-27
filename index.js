@@ -1,10 +1,17 @@
 'use strict';
 var numberIsNan = require('number-is-nan');
+var minimatch = require('minimatch');
 
 function createArg(key, val) {
 	key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
 	return '--' + key + (val ? '=' + val : '');
 };
+
+function globMatch(globs, value){
+	return globs.some(function(glob) {
+		return minimatch(value, glob);
+	});
+}
 
 module.exports = function (input, opts) {
 	var args = [];
@@ -14,11 +21,11 @@ module.exports = function (input, opts) {
 	Object.keys(input).forEach(function (key) {
 		var val = input[key];
 
-		if (Array.isArray(opts.excludes) && opts.excludes.indexOf(key) !== -1) {
+		if (Array.isArray(opts.excludes) && globMatch(opts.excludes, key)) {
 			return;
 		}
 
-		if (Array.isArray(opts.includes) && opts.includes.indexOf(key) === -1) {
+		if (Array.isArray(opts.includes) && !globMatch(opts.includes, key)) {
 			return;
 		}
 

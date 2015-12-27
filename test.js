@@ -34,7 +34,7 @@ test('convert options to cli flags', function (t) {
 });
 
 test('exclude options', function (t) {
-	var actual = dargs(fixture, {excludes: ['b', 'e', 'h', 'i']});
+	var actual = dargs(fixture, {excludes: ['b', '*e', 'h', 'i']});
 	var expected = [
 		'--a=foo',
 		'--no-c',
@@ -46,7 +46,7 @@ test('exclude options', function (t) {
 });
 
 test('includes options', function (t) {
-	var actual = dargs(fixture, {includes: ['a', 'c', 'd', 'e', 'camelCaseCamel']});
+	var actual = dargs(fixture, {includes: ['a', 'c', 'd', 'e', 'camelCase*']});
 	var expected = [
 		'--a=foo',
 		'--no-c',
@@ -62,7 +62,7 @@ test('includes options', function (t) {
 test('excludes and includes options', function (t) {
 	var actual = dargs(fixture, {
 		excludes: ['a', 'd'],
-		includes: ['a', 'c', 'd', 'e', 'camelCaseCamel']
+		includes: ['a', 'c', '+(d|e)', 'camelCaseCamel']
 	});
 	var expected = [
 		'--no-c',
