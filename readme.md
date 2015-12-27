@@ -23,11 +23,12 @@ var input = {
 	cake: false,                    // prepends `no-` before the key
 	camelCase: 5,                   // camelCase is slugged to `camel-case`
 	multiple: ['value', 'value2'],  // converted to multiple arguments
+	pieKind: 'cherry',
 	sad: ':('
 };
 
-var excludes = ['sad'];
-var includes = ['camelCase', 'multiple', 'sad'];
+var excludes = ['sad', /.*Kind$/];  // excludes and includes accept regular expressions
+var includes = ['camelCase', 'multiple', 'sad', /^pie.*/];
 
 console.log(dargs(input, {excludes: excludes}));
 /*
@@ -60,7 +61,8 @@ console.log(dargs(input, {includes: includes}));
 	'--camel-case=5',
 	'--multiple=value',
 	'--multiple=value2',
-	'--sad=:('
+	'--sad=:(',
+	'--pie-kind=cherry'
 ]
 */
 ```
@@ -84,13 +86,13 @@ Type: `object`
 
 Type: `array`
 
-Keys to exclude. Takes precedence over `includes`.
+Keys or regex of keys to exclude. Takes precedence over `includes`.
 
 ##### includes
 
 Type: `array`
 
-Keys to include.
+Keys or regex of keys to include.
 
 ##### ignoreFalse
 
