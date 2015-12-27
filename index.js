@@ -4,13 +4,13 @@ var numberIsNan = require('number-is-nan');
 function createArg(key, val) {
 	key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
 	return '--' + key + (val ? '=' + val : '');
-};
+}
 
-function match(arr, value){
-	return arr.some(function(toMatch) {
-		return toMatch instanceof RegExp
-			? toMatch.test(value)
-			: toMatch === value;
+function match(arr, value) {
+	return arr.some(function (toMatch) {
+		return toMatch instanceof RegExp ?
+			toMatch.test(value) :
+			toMatch === value;
 	});
 }
 
@@ -43,7 +43,7 @@ module.exports = function (input, opts) {
 		}
 
 		if (typeof val === 'number' && !numberIsNan(val)) {
-			args.push(createArg(key, '' + val));
+			args.push(createArg(key, String(val)));
 		}
 
 		if (Array.isArray(val)) {
