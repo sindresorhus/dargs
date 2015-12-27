@@ -31,14 +31,15 @@
     "url": "sindresorhus.com"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "xo && ava"
   },
   "dependencies": {
     "number-is-nan": "^1.0.0"
   },
   "devDependencies": {
     "array-equal": "^1.0.0",
-    "ava": "^0.0.4"
+    "ava": "*",
+    "xo": "*"
   },
   "engines": {
     "node": ">=0.10.0"
