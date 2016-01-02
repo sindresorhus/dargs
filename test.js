@@ -28,6 +28,22 @@ test('convert options to cli flags', t => {
 	]);
 });
 
+test('useEquals options', t => {
+	t.same(fn(fixture, {
+		useEquals: false
+	}), [
+		'--a foo',
+		'--b',
+		'--no-c',
+		'--d 5',
+		'--e foo',
+		'--e bar',
+		'--h with a space',
+		'--i let\'s try quotes',
+		'--camel-case-camel'
+	]);
+});
+
 test('exclude options', t => {
 	t.same(fn(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
 		'--a=foo',

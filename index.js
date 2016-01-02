@@ -1,9 +1,9 @@
 'use strict';
 var numberIsNan = require('number-is-nan');
 
-function createArg(key, val) {
+function createArg(key, val, separator) {
 	key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
-	return '--' + key + (val ? '=' + val : '');
+	return '--' + key + (val ? separator + val : '');
 }
 
 function match(arr, val) {
@@ -20,6 +20,8 @@ module.exports = function (input, opts) {
 	var args = [];
 
 	opts = opts || {};
+
+	var separator = opts.useEquals === false ? ' ' : '=';
 
 	Object.keys(input).forEach(function (key) {
 		var val = input[key];
@@ -47,16 +49,16 @@ module.exports = function (input, opts) {
 		}
 
 		if (typeof val === 'string') {
-			args.push(argFn(key, val));
+			args.push(argFn(key, val, separator));
 		}
 
 		if (typeof val === 'number' && !numberIsNan(val)) {
-			args.push(argFn(key, String(val)));
+			args.push(argFn(key, String(val), separator));
 		}
 
 		if (Array.isArray(val)) {
 			val.forEach(function (arrVal) {
-				args.push(argFn(key, arrVal));
+				args.push(argFn(key, arrVal, separator));
 			});
 		}
 	});
