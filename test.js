@@ -63,3 +63,28 @@ test('excludes and includes options', t => {
 test('option to ignore false values', t => {
 	t.same(fn({foo: false}, {ignoreFalse: true}), []);
 });
+
+test('aliases option', t => {
+	t.same(fn({a: 'foo', file: 'test'}, {
+		aliases: {file: 'f'}
+	}),
+		[
+			'--a=foo',
+			'-f test'
+		]);
+});
+
+test('includes and aliases options', t => {
+	t.same(fn(fixture, {
+		includes: ['a', 'c', 'd', 'e', 'camelCaseCamel'],
+		aliases: {a: 'a'}
+	}),
+		[
+			'-a foo',
+			'--no-c',
+			'--d=5',
+			'--e=foo',
+			'--e=bar',
+			'--camel-case-camel'
+		]);
+});
