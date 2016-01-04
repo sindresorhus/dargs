@@ -117,6 +117,22 @@ Type: `object`
 
 Maps keys in `input` to an aliased name. Matching keys are converted to options with a single dash ("-") in front of the aliased name and a space separating the aliased name from the value. Keys are still affected by `includes` and `excludes`.
 
+##### useEquals
+
+Type: `boolean`
+Default: `true`
+
+Setting to `false` switches the separator in generated commands from an equals sign ("=") to a single space (" "). For example:
+
+```js
+console.log(dargs({foo: 'bar'}, {useEquals: false}));
+/*
+[
+    '--foo bar'
+]
+*/
+```
+
 ##### ignoreFalse
 
 Type: `boolean`  
