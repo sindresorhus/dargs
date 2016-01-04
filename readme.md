@@ -82,6 +82,21 @@ console.log(dargs({
 	'-f baz'
 ]
 */
+
+// You can override the default separator
+console.log(dargs(input, {
+	includes: includes,
+	separator: ' '
+}));
+/*
+[
+	'--camel-case 5',
+	'--multiple value',
+	'--multiple value2',
+	'--sad :(',
+	'--pie-kind cherry'
+]
+*/
 ```
 
 ## API
@@ -111,11 +126,21 @@ Type: `array`
 
 Keys or regex of keys to include.
 
+<<<<<<< ea3815451ef5a2b46ac199f19e0ce1ee71b940fe
 ##### aliases
 
 Type: `object`
 
 Maps keys in `input` to an aliased name. Matching keys are converted to options with a single dash ("-") in front of the aliased name and a space separating the aliased name from the value. Keys are still affected by `includes` and `excludes`.
+=======
+
+##### separator
+
+Type: `String`  
+Default: `=`
+
+String to separate keys from values in command-line arguments.
+>>>>>>> Allow the user to configure the separator between command line arguments
 
 ##### ignoreFalse
 
