@@ -2,6 +2,7 @@ import test from 'ava';
 import fn from './';
 
 const fixture = {
+	_: ['some', 'option'],
 	a: 'foo',
 	b: true,
 	c: false,
@@ -24,8 +25,14 @@ test('convert options to cli flags', t => {
 		'--e=bar',
 		'--h=with a space',
 		'--i=let\'s try quotes',
-		'--camel-case-camel'
+		'--camel-case-camel',
+		'some',
+		'option'
 	]);
+});
+
+test('raises a TypeError if  \'_\' value is not an Array', t => {
+	t.throws(fn.bind(fn, {a: 'foo', _: 'baz'}), TypeError);
 });
 
 test('useEquals options', t => {
@@ -40,7 +47,9 @@ test('useEquals options', t => {
 		'--e bar',
 		'--h with a space',
 		'--i let\'s try quotes',
-		'--camel-case-camel'
+		'--camel-case-camel',
+		'some',
+		'option'
 	]);
 });
 
@@ -49,7 +58,9 @@ test('exclude options', t => {
 		'--a=foo',
 		'--no-c',
 		'--d=5',
-		'--camel-case-camel'
+		'--camel-case-camel',
+		'some',
+		'option'
 	]);
 });
 

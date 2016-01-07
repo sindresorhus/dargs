@@ -18,6 +18,7 @@ $ npm install --save dargs
 const dargs = require('dargs');
 
 const input = {
+	_: ['some', 'option'],          // each value in '_' will be appended to the end of the generated argument list, imitating minimist
 	foo: 'bar',
 	hello: true,                    // results in only the key being used
 	cake: false,                    // prepends `no-` before the key
@@ -39,7 +40,9 @@ console.log(dargs(input, {excludes: excludes}));
 	'--no-cake',
 	'--camel-case=5',
 	'--multiple=value',
-	'--multiple=value2'
+	'--multiple=value2',
+	'some',
+	'option'
 ]
 */
 

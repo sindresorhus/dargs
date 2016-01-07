@@ -18,6 +18,7 @@ function createAliasArg(key, val) {
 
 module.exports = function (input, opts) {
 	var args = [];
+	var extraArgs = [];
 
 	opts = opts || {};
 
@@ -38,6 +39,15 @@ module.exports = function (input, opts) {
 		if (typeof opts.aliases === 'object' && opts.aliases[key]) {
 			key = opts.aliases[key];
 			argFn = createAliasArg;
+		}
+
+		if (key === '_') {
+			if (!Array.isArray(val)) {
+				throw new TypeError('special key \'_\' expected to be an Array, found a(n) ' + (typeof val) + '.');
+			}
+
+			extraArgs = val;
+			return;
 		}
 
 		if (val === true) {
@@ -61,6 +71,10 @@ module.exports = function (input, opts) {
 				args.push(argFn(key, arrVal, separator));
 			});
 		}
+	});
+
+	extraArgs.forEach(function (extraArgVal) {
+		args.push(String(extraArgVal));
 	});
 
 	return args;
