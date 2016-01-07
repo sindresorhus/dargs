@@ -18,7 +18,7 @@ $ npm install --save dargs
 const dargs = require('dargs');
 
 const input = {
-	_: ['some', 'option'],          // each value in '_' will be appended to the end of the generated argument list, imitating minimist
+	_: ['some', 'option'],          // values in '_' will be appended to the end of the generated argument list
 	foo: 'bar',
 	hello: true,                    // results in only the key being used
 	cake: false,                    // prepends `no-` before the key
@@ -89,11 +89,10 @@ console.log(dargs({
 
 ## API
 
-### dargs(input, options)
+### dargs(input, [options])
 
 #### input
 
-*Required*  
 Type: `object`
 
 Object to convert to command-line arguments.
@@ -122,10 +121,10 @@ Maps keys in `input` to an aliased name. Matching keys are converted to options 
 
 ##### useEquals
 
-Type: `boolean`
+Type: `boolean`  
 Default: `true`
 
-Setting to `false` switches the separator in generated commands from an equals sign ("=") to a single space (" "). For example:
+Setting to `false` switches the separator in generated commands from an equals sign `=` to a single space ` `. For example:
 
 ```js
 console.log(dargs({foo: 'bar'}, {useEquals: false}));

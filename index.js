@@ -43,7 +43,7 @@ module.exports = function (input, opts) {
 
 		if (key === '_') {
 			if (!Array.isArray(val)) {
-				throw new TypeError('special key \'_\' expected to be an Array, found a(n) ' + (typeof val) + '.');
+				throw new TypeError('Expected key \'_\' to be an array, but found ' + (typeof val));
 			}
 
 			extraArgs = val;
