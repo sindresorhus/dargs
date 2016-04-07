@@ -16,7 +16,7 @@ const fixture = {
 };
 
 test('convert options to cli flags', t => {
-	t.same(fn(fixture), [
+	t.deepEqual(fn(fixture), [
 		'--a=foo',
 		'--b',
 		'--no-c',
@@ -36,7 +36,7 @@ test('raises a TypeError if  \'_\' value is not an Array', t => {
 });
 
 test('useEquals options', t => {
-	t.same(fn(fixture, {
+	t.deepEqual(fn(fixture, {
 		useEquals: false
 	}), [
 		'--a foo',
@@ -54,7 +54,7 @@ test('useEquals options', t => {
 });
 
 test('exclude options', t => {
-	t.same(fn(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
+	t.deepEqual(fn(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
 		'--a=foo',
 		'--no-c',
 		'--d=5',
@@ -65,7 +65,7 @@ test('exclude options', t => {
 });
 
 test('includes options', t => {
-	t.same(fn(fixture, {includes: ['a', 'c', 'd', 'e', /^camelCase.*/]}), [
+	t.deepEqual(fn(fixture, {includes: ['a', 'c', 'd', 'e', /^camelCase.*/]}), [
 		'--a=foo',
 		'--no-c',
 		'--d=5',
@@ -76,7 +76,7 @@ test('includes options', t => {
 });
 
 test('excludes and includes options', t => {
-	t.same(fn(fixture, {
+	t.deepEqual(fn(fixture, {
 		excludes: ['a', 'd'],
 		includes: ['a', 'c', /^[de]$/, 'camelCaseCamel']
 	}), [
@@ -88,30 +88,28 @@ test('excludes and includes options', t => {
 });
 
 test('option to ignore false values', t => {
-	t.same(fn({foo: false}, {ignoreFalse: true}), []);
+	t.deepEqual(fn({foo: false}, {ignoreFalse: true}), []);
 });
 
 test('aliases option', t => {
-	t.same(fn({a: 'foo', file: 'test'}, {
+	t.deepEqual(fn({a: 'foo', file: 'test'}, {
 		aliases: {file: 'f'}
-	}),
-		[
-			'--a=foo',
-			'-f test'
-		]);
+	}), [
+		'--a=foo',
+		'-f test'
+	]);
 });
 
 test('includes and aliases options', t => {
-	t.same(fn(fixture, {
+	t.deepEqual(fn(fixture, {
 		includes: ['a', 'c', 'd', 'e', 'camelCaseCamel'],
 		aliases: {a: 'a'}
-	}),
-		[
-			'-a foo',
-			'--no-c',
-			'--d=5',
-			'--e=foo',
-			'--e=bar',
-			'--camel-case-camel'
-		]);
+	}), [
+		'-a foo',
+		'--no-c',
+		'--d=5',
+		'--e=foo',
+		'--e=bar',
+		'--camel-case-camel'
+	]);
 });
