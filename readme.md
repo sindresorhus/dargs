@@ -12,7 +12,7 @@ $ npm install --save dargs
 ```
 
 
-#### Usage
+## Usage
 
 ```js
 const dargs = require('dargs');
@@ -32,7 +32,7 @@ const excludes = ['sad', /.*Kind$/];  // excludes and includes accept regular ex
 const includes = ['camelCase', 'multiple', 'sad', /^pie.*/];
 const aliases = {file: 'f'};
 
-console.log(dargs(input, {excludes: excludes}));
+console.log(dargs(input, {excludes}));
 /*
 [
 	'--foo=bar',
@@ -46,10 +46,7 @@ console.log(dargs(input, {excludes: excludes}));
 ]
 */
 
-console.log(dargs(input, {
-	excludes: excludes,
-	includes: includes
-}));
+console.log(dargs(input, {excludes, includes}));
 /*
 [
 	'--camel-case=5',
@@ -59,7 +56,7 @@ console.log(dargs(input, {
 */
 
 
-console.log(dargs(input, {includes: includes}));
+console.log(dargs(input, {includes}));
 /*
 [
 	'--camel-case=5',
@@ -75,9 +72,7 @@ console.log(dargs({
 	foo: 'bar',
 	hello: true,
 	file: 'baz'
-}, {
-	aliases: aliases
-}));
+}, {aliases}));
 /*
 [
 	'--foo=bar',
@@ -87,41 +82,42 @@ console.log(dargs({
 */
 ```
 
+
 ## API
 
 ### dargs(input, [options])
 
 #### input
 
-Type: `object`
+Type: `Object`
 
 Object to convert to command-line arguments.
 
 #### options
 
-Type: `object`
+Type: `Object`
 
 ##### excludes
 
-Type: `array`
+Type: `Array`
 
 Keys or regex of keys to exclude. Takes precedence over `includes`.
 
 ##### includes
 
-Type: `array`
+Type: `Array`
 
 Keys or regex of keys to include.
 
 ##### aliases
 
-Type: `object`
+Type: `Object`
 
-Maps keys in `input` to an aliased name. Matching keys are converted to options with a single dash ("-") in front of the aliased name and a space separating the aliased name from the value. Keys are still affected by `includes` and `excludes`.
+Maps keys in `input` to an aliased name. Matching keys are converted to arguments with a single dash (`-`) in front of the aliased key and the value in a separate array item. Keys are still affected by `includes` and `excludes`.
 
 ##### useEquals
 
-Type: `boolean`  
+Type: `boolean`<br>
 Default: `true`
 
 Setting this to `false` makes it return the key and value as separate array items instead of using a `=` separator in one item. This can be useful for tools that doesn't support `--foo=bar` style flags. For example:
@@ -130,19 +126,19 @@ Setting this to `false` makes it return the key and value as separate array item
 console.log(dargs({foo: 'bar'}, {useEquals: false}));
 /*
 [
-    '--foo', 'bar'
+	'--foo', 'bar'
 ]
 */
 ```
 
 ##### ignoreFalse
 
-Type: `boolean`  
+Type: `boolean`<br>
 Default: `false`
 
-Don't include `false` values. This is mostly useful when dealing with strict argument parsers that would throw on unknown arguments like `--no-foo`.
+Exclude `false` values. Can be useful when dealing with strict argument parsers that throw on unknown arguments like `--no-foo`.
 
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)

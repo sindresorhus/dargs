@@ -1,50 +1,40 @@
 'use strict';
-var numberIsNan = require('number-is-nan');
 
-function createArg(key, val) {
-	key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
+const match = (arr, val) => arr.some(x => x instanceof RegExp ? x.test(val) : x === val);
 
-	var ret = ['--' + key];
+module.exports = (input, opts) => {
+	const args = [];
+	let extraArgs = [];
 
-	if (val) {
-		ret.push(val);
-	}
+	opts = Object.assign({
+		useEquals: true
+	}, opts);
 
-	return ret;
-}
+	const makeArg = (key, val) => {
+		key = '--' + key.replace(/[A-Z]/g, '-$&').toLowerCase(); // eslint-disable-line prefer-template
 
-function match(arr, val) {
-	return arr.some(function (x) {
-		return x instanceof RegExp ? x.test(val) : x === val;
-	});
-}
+		if (opts.useEquals) {
+			args.push(key + (val ? `=${val}` : ''));
+		} else {
+			args.push(key);
 
-module.exports = function (input, opts) {
-	var args = [];
-	var extraArgs = [];
+			if (val) {
+				args.push(val);
+			}
+		}
+	};
 
-	opts = opts || {};
-
-	var createAliasArg = function (key, val) {
-		args.push('-' + key);
+	const makeAliasArg = (key, val) => {
+		args.push(`-${key}`);
 
 		if (val) {
 			args.push(val);
 		}
 	};
 
-	Object.keys(input).forEach(function (key) {
-		var val = input[key];
-
-		var argFn = (key, val) => {
-			var arg = createArg(key, val);
-
-			if (opts.useEquals === false) {
-				args.push.apply(args, arg);
-			} else {
-				args.push(arg.join('='));
-			}
-		};
+	Object.keys(input).forEach(key => {
+		const val = input[key];
+		let pushArg = makeArg;
 
 		if (Array.isArray(opts.excludes) && match(opts.excludes, key)) {
 			return;
@@ -56,12 +46,12 @@ module.exports = function (input, opts) {
 
 		if (typeof opts.aliases === 'object' && opts.aliases[key]) {
 			key = opts.aliases[key];
-			argFn = createAliasArg;
+			pushArg = makeAliasArg;
 		}
 
 		if (key === '_') {
 			if (!Array.isArray(val)) {
-				throw new TypeError('Expected key \'_\' to be an array, but found ' + (typeof val));
+				throw new TypeError(`Expected key \`_\` to be Array, got ${typeof val}`);
 			}
 
 			extraArgs = val;
@@ -69,29 +59,29 @@ module.exports = function (input, opts) {
 		}
 
 		if (val === true) {
-			argFn(key, '');
+			pushArg(key, '');
 		}
 
 		if (val === false && !opts.ignoreFalse) {
-			argFn('no-' + key);
+			pushArg(`no-${key}`);
 		}
 
 		if (typeof val === 'string') {
-			argFn(key, val);
+			pushArg(key, val);
 		}
 
-		if (typeof val === 'number' && !numberIsNan(val)) {
-			argFn(key, String(val));
+		if (typeof val === 'number' && !Number.isNaN(val)) {
+			pushArg(key, String(val));
 		}
 
 		if (Array.isArray(val)) {
-			val.forEach(function (arrVal) {
-				argFn(key, arrVal);
+			val.forEach(arrVal => {
+				pushArg(key, arrVal);
 			});
 		}
 	});
 
-	extraArgs.forEach(function (extraArgVal) {
+	extraArgs.forEach(extraArgVal => {
 		args.push(String(extraArgVal));
 	});
 

@@ -1,5 +1,5 @@
 import test from 'ava';
-import fn from './';
+import m from './';
 
 const fixture = {
 	_: ['some', 'option'],
@@ -16,7 +16,7 @@ const fixture = {
 };
 
 test('convert options to cli flags', t => {
-	t.deepEqual(fn(fixture), [
+	t.deepEqual(m(fixture), [
 		'--a=foo',
 		'--b',
 		'--no-c',
@@ -32,11 +32,11 @@ test('convert options to cli flags', t => {
 });
 
 test('raises a TypeError if  \'_\' value is not an Array', t => {
-	t.throws(fn.bind(fn, {a: 'foo', _: 'baz'}), TypeError);
+	t.throws(m.bind(m, {a: 'foo', _: 'baz'}), TypeError);
 });
 
 test('useEquals options', t => {
-	t.deepEqual(fn(fixture, {
+	t.deepEqual(m(fixture, {
 		useEquals: false
 	}), [
 		'--a', 'foo',
@@ -54,7 +54,7 @@ test('useEquals options', t => {
 });
 
 test('exclude options', t => {
-	t.deepEqual(fn(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
+	t.deepEqual(m(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
 		'--a=foo',
 		'--no-c',
 		'--d=5',
@@ -65,7 +65,7 @@ test('exclude options', t => {
 });
 
 test('includes options', t => {
-	t.deepEqual(fn(fixture, {includes: ['a', 'c', 'd', 'e', /^camelCase.*/]}), [
+	t.deepEqual(m(fixture, {includes: ['a', 'c', 'd', 'e', /^camelCase.*/]}), [
 		'--a=foo',
 		'--no-c',
 		'--d=5',
@@ -76,7 +76,7 @@ test('includes options', t => {
 });
 
 test('excludes and includes options', t => {
-	t.deepEqual(fn(fixture, {
+	t.deepEqual(m(fixture, {
 		excludes: ['a', 'd'],
 		includes: ['a', 'c', /^[de]$/, 'camelCaseCamel']
 	}), [
@@ -88,11 +88,11 @@ test('excludes and includes options', t => {
 });
 
 test('option to ignore false values', t => {
-	t.deepEqual(fn({foo: false}, {ignoreFalse: true}), []);
+	t.deepEqual(m({foo: false}, {ignoreFalse: true}), []);
 });
 
 test('aliases option', t => {
-	t.deepEqual(fn({a: 'foo', file: 'test'}, {
+	t.deepEqual(m({a: 'foo', file: 'test'}, {
 		aliases: {file: 'f'}
 	}), [
 		'--a=foo',
@@ -101,7 +101,7 @@ test('aliases option', t => {
 });
 
 test('includes and aliases options', t => {
-	t.deepEqual(fn(fixture, {
+	t.deepEqual(m(fixture, {
 		includes: ['a', 'c', 'd', 'e', 'camelCaseCamel'],
 		aliases: {a: 'a'}
 	}), [
