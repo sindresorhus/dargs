@@ -39,14 +39,14 @@ test('useEquals options', t => {
 	t.deepEqual(fn(fixture, {
 		useEquals: false
 	}), [
-		'--a foo',
+		'--a', 'foo',
 		'--b',
 		'--no-c',
-		'--d 5',
-		'--e foo',
-		'--e bar',
-		'--h with a space',
-		'--i let\'s try quotes',
+		'--d', '5',
+		'--e', 'foo',
+		'--e', 'bar',
+		'--h', 'with a space',
+		'--i', 'let\'s try quotes',
 		'--camel-case-camel',
 		'some',
 		'option'
@@ -96,7 +96,7 @@ test('aliases option', t => {
 		aliases: {file: 'f'}
 	}), [
 		'--a=foo',
-		'-f test'
+		'-f', 'test'
 	]);
 });
 
@@ -105,7 +105,7 @@ test('includes and aliases options', t => {
 		includes: ['a', 'c', 'd', 'e', 'camelCaseCamel'],
 		aliases: {a: 'a'}
 	}), [
-		'-a foo',
+		'-a', 'foo',
 		'--no-c',
 		'--d=5',
 		'--e=foo',

@@ -82,7 +82,7 @@ console.log(dargs({
 [
 	'--foo=bar',
 	'--hello',
-	'-f baz'
+	'-f', 'baz'
 ]
 */
 ```
@@ -124,13 +124,13 @@ Maps keys in `input` to an aliased name. Matching keys are converted to options 
 Type: `boolean`  
 Default: `true`
 
-Setting to `false` switches the separator in generated commands from an equals sign `=` to a single space ` `. For example:
+Setting this to `false` makes it return the key and value as separate array items instead of using a `=` separator in one item. This can be useful for tools that doesn't support `--foo=bar` style flags. For example:
 
 ```js
 console.log(dargs({foo: 'bar'}, {useEquals: false}));
 /*
 [
-    '--foo bar'
+    '--foo', 'bar'
 ]
 */
 ```

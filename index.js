@@ -1,9 +1,16 @@
 'use strict';
 var numberIsNan = require('number-is-nan');
 
-function createArg(key, val, separator) {
+function createArg(key, val) {
 	key = key.replace(/[A-Z]/g, '-$&').toLowerCase();
-	return '--' + key + (val ? separator + val : '');
+
+	var ret = ['--' + key];
+
+	if (val) {
+		ret.push(val);
+	}
+
+	return ret;
 }
 
 function match(arr, val) {
@@ -12,21 +19,32 @@ function match(arr, val) {
 	});
 }
 
-function createAliasArg(key, val) {
-	return '-' + key + (val ? ' ' + val : '');
-}
-
 module.exports = function (input, opts) {
 	var args = [];
 	var extraArgs = [];
 
 	opts = opts || {};
 
-	var separator = opts.useEquals === false ? ' ' : '=';
+	var createAliasArg = function (key, val) {
+		args.push('-' + key);
+
+		if (val) {
+			args.push(val);
+		}
+	};
 
 	Object.keys(input).forEach(function (key) {
 		var val = input[key];
-		var argFn = createArg;
+
+		var argFn = (key, val) => {
+			var arg = createArg(key, val);
+
+			if (opts.useEquals === false) {
+				args.push.apply(args, arg);
+			} else {
+				args.push(arg.join('='));
+			}
+		};
 
 		if (Array.isArray(opts.excludes) && match(opts.excludes, key)) {
 			return;
@@ -51,24 +69,24 @@ module.exports = function (input, opts) {
 		}
 
 		if (val === true) {
-			args.push(argFn(key, ''));
+			argFn(key, '');
 		}
 
 		if (val === false && !opts.ignoreFalse) {
-			args.push(argFn('no-' + key));
+			argFn('no-' + key);
 		}
 
 		if (typeof val === 'string') {
-			args.push(argFn(key, val, separator));
+			argFn(key, val);
 		}
 
 		if (typeof val === 'number' && !numberIsNan(val)) {
-			args.push(argFn(key, String(val), separator));
+			argFn(key, String(val));
 		}
 
 		if (Array.isArray(val)) {
 			val.forEach(function (arrVal) {
-				args.push(argFn(key, arrVal, separator));
+				argFn(key, arrVal);
 			});
 		}
 	});
