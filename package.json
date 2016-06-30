@@ -1,6 +1,6 @@
 {
   "name": "dargs",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Reverse minimist. Convert an object of options into an array of command-line arguments.",
   "license": "MIT",
   "repository": "sindresorhus/dargs",
