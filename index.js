@@ -11,7 +11,7 @@ module.exports = (input, opts) => {
 	}, opts);
 
 	const makeArg = (key, val) => {
-		key = '--' + key.replace(/[A-Z]/g, '-$&').toLowerCase(); // eslint-disable-line prefer-template
+		key = '--' + (opts.allowCamelCase ? key : key.replace(/[A-Z]/g, '-$&').toLowerCase()); // eslint-disable-line prefer-template
 
 		if (opts.useEquals) {
 			args.push(key + (val ? `=${val}` : ''));

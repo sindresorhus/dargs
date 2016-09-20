@@ -113,3 +113,21 @@ test('includes and aliases options', t => {
 		'--camel-case-camel'
 	]);
 });
+
+test('camelCase option', t => {
+	t.deepEqual(m(fixture, {
+		allowCamelCase: true
+	}), [
+		'--a=foo',
+		'--b',
+		'--no-c',
+		'--d=5',
+		'--e=foo',
+		'--e=bar',
+		'--h=with a space',
+		'--i=let\'s try quotes',
+		'--camelCaseCamel',
+		'some',
+		'option'
+	]);
+});
