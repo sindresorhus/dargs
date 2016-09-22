@@ -138,6 +138,20 @@ Default: `false`
 
 Exclude `false` values. Can be useful when dealing with strict argument parsers that throw on unknown arguments like `--no-foo`.
 
+##### allowCamelCase
+
+Type: `boolean`<br>
+Default: `false`
+
+By default dargs will convert camelcase arguments to hyphenated arguments. Setting this to true will bypass the conversion process. For example:
+
+```
+console.log(dargs({fooBar: 'baz'}));
+//=> ['--foo-bar', 'baz']
+
+console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
+//=> ['--fooBar', 'baz']
+```
 
 ## License
 
