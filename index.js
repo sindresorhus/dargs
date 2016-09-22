@@ -11,7 +11,7 @@ module.exports = (input, opts) => {
 	}, opts);
 
 	const makeArg = (key, val) => {
-		key = '--' + (opts.allowCamelCase ? key : key.replace(/[A-Z]/g, '-$&').toLowerCase()); // eslint-disable-line prefer-template
+		key = '--' + (opts.allowCamelCase ? key : key.replace(/[A-Z]/g, '-$&').toLowerCase());
 
 		if (opts.useEquals) {
 			args.push(key + (val ? `=${val}` : ''));
@@ -32,6 +32,7 @@ module.exports = (input, opts) => {
 		}
 	};
 
+	// TODO: use for-of loop and Object.entries when targeting Node.js 6
 	Object.keys(input).forEach(key => {
 		const val = input[key];
 		let pushArg = makeArg;
@@ -81,9 +82,9 @@ module.exports = (input, opts) => {
 		}
 	});
 
-	extraArgs.forEach(extraArgVal => {
-		args.push(String(extraArgVal));
-	});
+	for (const x of extraArgs) {
+		args.push(String(x));
+	}
 
 	return args;
 };

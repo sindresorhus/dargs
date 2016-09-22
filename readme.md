@@ -120,7 +120,9 @@ Maps keys in `input` to an aliased name. Matching keys are converted to argument
 Type: `boolean`<br>
 Default: `true`
 
-Setting this to `false` makes it return the key and value as separate array items instead of using a `=` separator in one item. This can be useful for tools that doesn't support `--foo=bar` style flags. For example:
+Setting this to `false` makes it return the key and value as separate array items instead of using a `=` separator in one item. This can be useful for tools that doesn't support `--foo=bar` style flags.
+
+###### Example
 
 ```js
 console.log(dargs({foo: 'bar'}, {useEquals: false}));
@@ -143,15 +145,18 @@ Exclude `false` values. Can be useful when dealing with strict argument parsers 
 Type: `boolean`<br>
 Default: `false`
 
-By default dargs will convert camelcase arguments to hyphenated arguments. Setting this to true will bypass the conversion process. For example:
+By default, camelCased keys will be hyphenated. Enabling this will bypass the conversion process.
 
-```
+###### Example
+
+```js
 console.log(dargs({fooBar: 'baz'}));
 //=> ['--foo-bar', 'baz']
 
 console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
 //=> ['--fooBar', 'baz']
 ```
+
 
 ## License
 
