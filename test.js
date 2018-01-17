@@ -33,7 +33,7 @@ test('convert options to cli flags', t => {
 		'other',
 		'args',
 		'-z',
-		'--camelCaseOpt' // case unaffected for separated options
+		'--camelCaseOpt' // Case unaffected for separated options
 	]);
 });
 
