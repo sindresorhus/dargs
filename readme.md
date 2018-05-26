@@ -8,7 +8,7 @@ Useful when spawning command-line tools.
 ## Install
 
 ```
-$ npm install --save dargs
+$ npm install dargs
 ```
 
 
@@ -18,17 +18,17 @@ $ npm install --save dargs
 const dargs = require('dargs');
 
 const input = {
-	_: ['some', 'option'],          // values in '_' will be appended to the end of the generated argument list
+	_: ['some', 'option'],          // Values in '_' will be appended to the end of the generated argument list
 	foo: 'bar',
-	hello: true,                    // results in only the key being used
-	cake: false,                    // prepends `no-` before the key
-	camelCase: 5,                   // camelCase is slugged to `camel-case`
-	multiple: ['value', 'value2'],  // converted to multiple arguments
+	hello: true,                    // Results in only the key being used
+	cake: false,                    // Prepends `no-` before the key
+	camelCase: 5,                   // CamelCase is slugged to `camel-case`
+	multiple: ['value', 'value2'],  // Converted to multiple arguments
 	pieKind: 'cherry',
 	sad: ':('
 };
 
-const excludes = ['sad', /.*Kind$/];  // excludes and includes accept regular expressions
+const excludes = ['sad', /.*Kind$/];  // Excludes and includes accept regular expressions
 const includes = ['camelCase', 'multiple', 'sad', /^pie.*/];
 const aliases = {file: 'f'};
 

@@ -1,6 +1,6 @@
 'use strict';
 
-const match = (arr, val) => arr.some(x => x instanceof RegExp ? x.test(val) : x === val);
+const match = (array, value) => array.some(x => x instanceof RegExp ? x.test(value) : x === value);
 
 module.exports = (input, opts) => {
 	const args = [];
@@ -33,17 +33,17 @@ module.exports = (input, opts) => {
 		}
 	};
 
-	// TODO: use for-of loop and Object.entries when targeting Node.js 6
-	Object.keys(input).forEach(key => {
+	// TODO: Use Object.entries() when targeting Node.js 8
+	for (let key of Object.keys(input)) {
 		const val = input[key];
 		let pushArg = makeArg;
 
 		if (Array.isArray(opts.excludes) && match(opts.excludes, key)) {
-			return;
+			continue;
 		}
 
 		if (Array.isArray(opts.includes) && !match(opts.includes, key)) {
-			return;
+			continue;
 		}
 
 		if (typeof opts.aliases === 'object' && opts.aliases[key]) {
@@ -57,7 +57,7 @@ module.exports = (input, opts) => {
 			}
 
 			separatedArgs = val;
-			return;
+			continue;
 		}
 
 		if (key === '_') {
@@ -66,7 +66,7 @@ module.exports = (input, opts) => {
 			}
 
 			extraArgs = val;
-			return;
+			continue;
 		}
 
 		if (val === true) {
@@ -86,11 +86,11 @@ module.exports = (input, opts) => {
 		}
 
 		if (Array.isArray(val)) {
-			val.forEach(arrVal => {
-				pushArg(key, arrVal);
-			});
+			for (const arrayValue of val) {
+				pushArg(key, arrayValue);
+			}
 		}
-	});
+	}
 
 	for (const x of extraArgs) {
 		args.push(String(x));
