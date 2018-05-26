@@ -5,6 +5,7 @@ const match = (arr, val) => arr.some(x => x instanceof RegExp ? x.test(val) : x 
 module.exports = (input, opts) => {
 	const args = [];
 	let extraArgs = [];
+	let separatedArgs = [];
 
 	opts = Object.assign({
 		useEquals: true
@@ -50,6 +51,15 @@ module.exports = (input, opts) => {
 			pushArg = makeAliasArg;
 		}
 
+		if (key === '--') {
+			if (!Array.isArray(val)) {
+				throw new TypeError(`Expected key \`--\` to be Array, got ${typeof val}`);
+			}
+
+			separatedArgs = val;
+			return;
+		}
+
 		if (key === '_') {
 			if (!Array.isArray(val)) {
 				throw new TypeError(`Expected key \`_\` to be Array, got ${typeof val}`);
@@ -83,6 +93,14 @@ module.exports = (input, opts) => {
 	});
 
 	for (const x of extraArgs) {
+		args.push(String(x));
+	}
+
+	if (separatedArgs.length > 0) {
+		args.push('--');
+	}
+
+	for (const x of separatedArgs) {
 		args.push(String(x));
 	}
 

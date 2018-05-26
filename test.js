@@ -3,6 +3,7 @@ import m from './';
 
 const fixture = {
 	_: ['some', 'option'],
+	'--': ['other', 'args', '-z', '--camelCaseOpt'],
 	a: 'foo',
 	b: true,
 	c: false,
@@ -27,12 +28,21 @@ test('convert options to cli flags', t => {
 		'--i=let\'s try quotes',
 		'--camel-case-camel',
 		'some',
-		'option'
+		'option',
+		'--',
+		'other',
+		'args',
+		'-z',
+		'--camelCaseOpt' // Case unaffected for separated options
 	]);
 });
 
 test('raises a TypeError if  \'_\' value is not an Array', t => {
 	t.throws(m.bind(m, {a: 'foo', _: 'baz'}), TypeError);
+});
+
+test('raises a TypeError if  \'--\' value is not an Array', t => {
+	t.throws(m.bind(m, {a: 'foo', '--': 'baz'}), TypeError);
 });
 
 test('useEquals options', t => {
@@ -49,7 +59,12 @@ test('useEquals options', t => {
 		'--i', 'let\'s try quotes',
 		'--camel-case-camel',
 		'some',
-		'option'
+		'option',
+		'--',
+		'other',
+		'args',
+		'-z',
+		'--camelCaseOpt'
 	]);
 });
 
@@ -60,7 +75,12 @@ test('exclude options', t => {
 		'--d=5',
 		'--camel-case-camel',
 		'some',
-		'option'
+		'option',
+		'--',
+		'other',
+		'args',
+		'-z',
+		'--camelCaseOpt'
 	]);
 });
 
@@ -128,6 +148,11 @@ test('camelCase option', t => {
 		'--i=let\'s try quotes',
 		'--camelCaseCamel',
 		'some',
-		'option'
+		'option',
+		'--',
+		'other',
+		'args',
+		'-z',
+		'--camelCaseOpt'
 	]);
 });
