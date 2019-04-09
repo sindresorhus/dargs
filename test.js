@@ -1,5 +1,5 @@
 import test from 'ava';
-import m from '.';
+import dargs from '.';
 
 const fixture = {
 	_: ['some', 'option'],
@@ -17,7 +17,7 @@ const fixture = {
 };
 
 test('convert options to cli flags', t => {
-	t.deepEqual(m(fixture), [
+	t.deepEqual(dargs(fixture), [
 		'--a=foo',
 		'--b',
 		'--no-c',
@@ -38,25 +38,31 @@ test('convert options to cli flags', t => {
 });
 
 test('raises a TypeError if  \'_\' value is not an Array', t => {
-	t.throws(m.bind(m, {a: 'foo', _: 'baz'}), TypeError);
+	t.throws(dargs.bind(dargs, {a: 'foo', _: 'baz'}), TypeError);
 });
 
 test('raises a TypeError if  \'--\' value is not an Array', t => {
-	t.throws(m.bind(m, {a: 'foo', '--': 'baz'}), TypeError);
+	t.throws(dargs.bind(dargs, {a: 'foo', '--': 'baz'}), TypeError);
 });
 
 test('useEquals options', t => {
-	t.deepEqual(m(fixture, {
+	t.deepEqual(dargs(fixture, {
 		useEquals: false
 	}), [
-		'--a', 'foo',
+		'--a',
+		'foo',
 		'--b',
 		'--no-c',
-		'--d', '5',
-		'--e', 'foo',
-		'--e', 'bar',
-		'--h', 'with a space',
-		'--i', 'let\'s try quotes',
+		'--d',
+		'5',
+		'--e',
+		'foo',
+		'--e',
+		'bar',
+		'--h',
+		'with a space',
+		'--i',
+		'let\'s try quotes',
 		'--camel-case-camel',
 		'some',
 		'option',
@@ -69,7 +75,7 @@ test('useEquals options', t => {
 });
 
 test('exclude options', t => {
-	t.deepEqual(m(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
+	t.deepEqual(dargs(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
 		'--a=foo',
 		'--no-c',
 		'--d=5',
@@ -85,7 +91,7 @@ test('exclude options', t => {
 });
 
 test('includes options', t => {
-	t.deepEqual(m(fixture, {includes: ['a', 'c', 'd', 'e', /^camelCase.*/]}), [
+	t.deepEqual(dargs(fixture, {includes: ['a', 'c', 'd', 'e', /^camelCase.*/]}), [
 		'--a=foo',
 		'--no-c',
 		'--d=5',
@@ -96,7 +102,7 @@ test('includes options', t => {
 });
 
 test('excludes and includes options', t => {
-	t.deepEqual(m(fixture, {
+	t.deepEqual(dargs(fixture, {
 		excludes: ['a', 'd'],
 		includes: ['a', 'c', /^[de]$/, 'camelCaseCamel']
 	}), [
@@ -108,24 +114,26 @@ test('excludes and includes options', t => {
 });
 
 test('option to ignore false values', t => {
-	t.deepEqual(m({foo: false}, {ignoreFalse: true}), []);
+	t.deepEqual(dargs({foo: false}, {ignoreFalse: true}), []);
 });
 
 test('aliases option', t => {
-	t.deepEqual(m({a: 'foo', file: 'test'}, {
+	t.deepEqual(dargs({a: 'foo', file: 'test'}, {
 		aliases: {file: 'f'}
 	}), [
 		'--a=foo',
-		'-f', 'test'
+		'-f',
+		'test'
 	]);
 });
 
 test('includes and aliases options', t => {
-	t.deepEqual(m(fixture, {
+	t.deepEqual(dargs(fixture, {
 		includes: ['a', 'c', 'd', 'e', 'camelCaseCamel'],
 		aliases: {a: 'a'}
 	}), [
-		'-a', 'foo',
+		'-a',
+		'foo',
 		'--no-c',
 		'--d=5',
 		'--e=foo',
@@ -135,7 +143,7 @@ test('includes and aliases options', t => {
 });
 
 test('camelCase option', t => {
-	t.deepEqual(m(fixture, {
+	t.deepEqual(dargs(fixture, {
 		allowCamelCase: true
 	}), [
 		'--a=foo',
