@@ -8,10 +8,9 @@ const dargs = (input, options) => {
 	let extraArgs = [];
 	let separatedArgs = [];
 
-	options = {
-		useEquals: true,
-		...options
-	};
+	options = Object.assign({
+		useEquals: true
+	}, options);
 
 	const makeArg = (key, value) => {
 		key =
@@ -39,7 +38,9 @@ const dargs = (input, options) => {
 		}
 	};
 
-	for (let [key, value] of Object.entries(input)) {
+	// TODO: Use Object.entries() when targeting Node.js 8
+	for (let key of Object.keys(input)) {
+		const value = input[key];
 		let pushArg = makeArg;
 
 		if (Array.isArray(options.excludes) && match(options.excludes, key)) {
