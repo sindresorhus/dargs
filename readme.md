@@ -19,6 +19,7 @@ const dargs = require('dargs');
 
 const input = {
 	_: ['some', 'option'],          // Values in '_' will be appended to the end of the generated argument list
+	'--': ['separated', 'option'],  // Values in '--' will be put at the very end of the argument list after the escape option (`--`)
 	foo: 'bar',
 	hello: true,                    // Results in only the key being used
 	cake: false,                    // Prepends `no-` before the key
@@ -42,6 +43,9 @@ console.log(dargs(input, {excludes}));
 	'--multiple=value',
 	'--multiple=value2',
 	'some',
+	'option',
+	'--',
+	'separated',
 	'option'
 ]
 */

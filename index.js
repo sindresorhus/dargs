@@ -1,92 +1,101 @@
 'use strict';
 
-const match = (array, value) => array.some(x => x instanceof RegExp ? x.test(value) : x === value);
+const match = (array, value) =>
+	array.some(x => (x instanceof RegExp ? x.test(value) : x === value));
 
-module.exports = (input, opts) => {
+const dargs = (input, options) => {
 	const args = [];
 	let extraArgs = [];
 	let separatedArgs = [];
 
-	opts = Object.assign({
+	options = Object.assign({
 		useEquals: true
-	}, opts);
+	}, options);
 
-	const makeArg = (key, val) => {
-		key = '--' + (opts.allowCamelCase ? key : key.replace(/[A-Z]/g, '-$&').toLowerCase());
+	const makeArg = (key, value) => {
+		key =
+			'--' +
+			(options.allowCamelCase ?
+				key :
+				key.replace(/[A-Z]/g, '-$&').toLowerCase());
 
-		if (opts.useEquals) {
-			args.push(key + (val ? `=${val}` : ''));
+		if (options.useEquals) {
+			args.push(key + (value ? `=${value}` : ''));
 		} else {
 			args.push(key);
 
-			if (val) {
-				args.push(val);
+			if (value) {
+				args.push(value);
 			}
 		}
 	};
 
-	const makeAliasArg = (key, val) => {
+	const makeAliasArg = (key, value) => {
 		args.push(`-${key}`);
 
-		if (val) {
-			args.push(val);
+		if (value) {
+			args.push(value);
 		}
 	};
 
 	// TODO: Use Object.entries() when targeting Node.js 8
 	for (let key of Object.keys(input)) {
-		const val = input[key];
+		const value = input[key];
 		let pushArg = makeArg;
 
-		if (Array.isArray(opts.excludes) && match(opts.excludes, key)) {
+		if (Array.isArray(options.excludes) && match(options.excludes, key)) {
 			continue;
 		}
 
-		if (Array.isArray(opts.includes) && !match(opts.includes, key)) {
+		if (Array.isArray(options.includes) && !match(options.includes, key)) {
 			continue;
 		}
 
-		if (typeof opts.aliases === 'object' && opts.aliases[key]) {
-			key = opts.aliases[key];
+		if (typeof options.aliases === 'object' && options.aliases[key]) {
+			key = options.aliases[key];
 			pushArg = makeAliasArg;
 		}
 
 		if (key === '--') {
-			if (!Array.isArray(val)) {
-				throw new TypeError(`Expected key \`--\` to be Array, got ${typeof val}`);
+			if (!Array.isArray(value)) {
+				throw new TypeError(
+					`Expected key \`--\` to be Array, got ${typeof value}`
+				);
 			}
 
-			separatedArgs = val;
+			separatedArgs = value;
 			continue;
 		}
 
 		if (key === '_') {
-			if (!Array.isArray(val)) {
-				throw new TypeError(`Expected key \`_\` to be Array, got ${typeof val}`);
+			if (!Array.isArray(value)) {
+				throw new TypeError(
+					`Expected key \`_\` to be Array, got ${typeof value}`
+				);
 			}
 
-			extraArgs = val;
+			extraArgs = value;
 			continue;
 		}
 
-		if (val === true) {
+		if (value === true) {
 			pushArg(key, '');
 		}
 
-		if (val === false && !opts.ignoreFalse) {
+		if (value === false && !options.ignoreFalse) {
 			pushArg(`no-${key}`);
 		}
 
-		if (typeof val === 'string') {
-			pushArg(key, val);
+		if (typeof value === 'string') {
+			pushArg(key, value);
 		}
 
-		if (typeof val === 'number' && !Number.isNaN(val)) {
-			pushArg(key, String(val));
+		if (typeof value === 'number' && !Number.isNaN(value)) {
+			pushArg(key, String(value));
 		}
 
-		if (Array.isArray(val)) {
-			for (const arrayValue of val) {
+		if (Array.isArray(value)) {
+			for (const arrayValue of value) {
 				pushArg(key, arrayValue);
 			}
 		}
@@ -106,3 +115,5 @@ module.exports = (input, opts) => {
 
 	return args;
 };
+
+module.exports = dargs;
