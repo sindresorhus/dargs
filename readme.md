@@ -93,29 +93,29 @@ console.log(dargs({
 
 #### input
 
-Type: `Object`
+Type: `object`
 
 Object to convert to command-line arguments.
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 ##### excludes
 
-Type: `Array`
+Type: `Array<string | RegExp>`
 
 Keys or regex of keys to exclude. Takes precedence over `includes`.
 
 ##### includes
 
-Type: `Array`
+Type: `Array<string | RegExp>`
 
 Keys or regex of keys to include.
 
 ##### aliases
 
-Type: `Object`
+Type: `object`
 
 Maps keys in `input` to an aliased name. Matching keys are converted to arguments with a single dash (`-`) in front of the aliased key and the value in a separate array item. Keys are still affected by `includes` and `excludes`.
 

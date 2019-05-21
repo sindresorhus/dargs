@@ -129,7 +129,7 @@ declare function dargs(
 	input: {
 		'--'?: string[];
 		_?: string[];
-	} & {[key: string]: string | boolean | number | string[]},
+	} & {[key: string]: string | boolean | number | readonly string[]},
 	options?: dargs.Options
 ): string[];
 
