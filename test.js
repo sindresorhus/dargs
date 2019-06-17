@@ -164,3 +164,14 @@ test('camelCase option', t => {
 		'--camelCaseOpt'
 	]);
 });
+
+test('allowSingleFlags: true option', t => {
+	t.deepEqual(dargs({a: 123, b: 'foo', foo: 'bar', camelCaseCamel: true}, {
+		allowSingleFlags: true
+	}), [
+		'-a=123',
+		'-b=foo',
+		'--foo=bar',
+		'--camel-case-camel'
+	]);
+});

@@ -13,11 +13,12 @@ const dargs = (input, options) => {
 	}, options);
 
 	const makeArg = (key, value) => {
-		key =
-			'--' +
-			(options.allowCamelCase ?
-				key :
-				key.replace(/[A-Z]/g, '-$&').toLowerCase());
+		const prefix = options.allowSingleFlags && key.length === 1 ? '-' : '--';
+		const theKey = (options.allowCamelCase ?
+			key :
+			key.replace(/[A-Z]/g, '-$&').toLowerCase());
+
+		key = prefix + theKey;
 
 		if (options.useEquals) {
 			args.push(key + (value ? `=${value}` : ''));
