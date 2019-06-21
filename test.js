@@ -167,7 +167,7 @@ test('camelCase option', t => {
 
 test('allowSingleFlags: true option', t => {
 	t.deepEqual(dargs({a: 123, b: 'foo', foo: 'bar', camelCaseCamel: true}, {
-		allowSingleFlags: true
+		shortFlag: true
 	}), [
 		'-a=123',
 		'-b=foo',

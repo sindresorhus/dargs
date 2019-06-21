@@ -9,11 +9,12 @@ const dargs = (input, options) => {
 	let separatedArgs = [];
 
 	options = Object.assign({
-		useEquals: true
+		useEquals: true,
+		shortFlag: false
 	}, options);
 
 	const makeArg = (key, value) => {
-		const prefix = options.allowSingleFlags && key.length === 1 ? '-' : '--';
+		const prefix = options.shortFlag && key.length === 1 ? '-' : '--';
 		const theKey = (options.allowCamelCase ?
 			key :
 			key.replace(/[A-Z]/g, '-$&').toLowerCase());
