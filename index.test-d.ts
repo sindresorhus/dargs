@@ -1,5 +1,5 @@
 import {expectType, expectError} from 'tsd';
-import dargs = require('.');
+import * as dargs from '.';
 
 const input = {
 	_: ['some', 'option'],
@@ -20,6 +20,7 @@ expectType<string[]>(dargs(input, {excludes}));
 expectType<string[]>(dargs(input, {includes}));
 expectType<string[]>(dargs(input, {aliases}));
 expectType<string[]>(dargs(input, {useEquals: false}));
+expectType<string[]>(dargs(input, {shortFlag: true}));
 expectType<string[]>(dargs(input, {ignoreFalse: true}));
 expectType<string[]>(dargs(input, {allowCamelCase: true}));
 

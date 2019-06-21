@@ -40,7 +40,7 @@ declare namespace dargs {
 		```
 		console.log(dargs({a: true}, {shortFlag: true}));
 		// ['-a']
-		console.log(dargs({a: true}, {shortFlag: false}));
+		console.log(dargs({a: true}));
 		// ['--a']
 		```
 		*/
