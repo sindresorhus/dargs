@@ -17,7 +17,7 @@ $ npm install dargs
 ```js
 const dargs = require('dargs');
 
-const input = {
+const object = {
 	_: ['some', 'option'],          // Values in '_' will be appended to the end of the generated argument list
 	'--': ['separated', 'option'],  // Values in '--' will be put at the very end of the argument list after the escape option (`--`)
 	foo: 'bar',
@@ -33,7 +33,7 @@ const excludes = ['sad', /.*Kind$/];  // Excludes and includes accept regular ex
 const includes = ['camelCase', 'multiple', 'sad', /^pie.*/];
 const aliases = {file: 'f'};
 
-console.log(dargs(input, {excludes}));
+console.log(dargs(object, {excludes}));
 /*
 [
 	'--foo=bar',
@@ -50,7 +50,7 @@ console.log(dargs(input, {excludes}));
 ]
 */
 
-console.log(dargs(input, {excludes, includes}));
+console.log(dargs(object, {excludes, includes}));
 /*
 [
 	'--camel-case=5',
@@ -60,7 +60,7 @@ console.log(dargs(input, {excludes, includes}));
 */
 
 
-console.log(dargs(input, {includes}));
+console.log(dargs(object, {includes}));
 /*
 [
 	'--camel-case=5',
@@ -89,9 +89,9 @@ console.log(dargs({
 
 ## API
 
-### dargs(input, [options])
+### dargs(object, options?)
 
-#### input
+#### object
 
 Type: `object`
 
@@ -117,7 +117,7 @@ Keys or regex of keys to include.
 
 Type: `object`
 
-Maps keys in `input` to an aliased name. Matching keys are converted to arguments with a single dash (`-`) in front of the aliased key and the value in a separate array item. Keys are still affected by `includes` and `excludes`.
+Maps keys in `object` to an aliased name. Matching keys are converted to arguments with a single dash (`-`) in front of the aliased key and the value in a separate array item. Keys are still affected by `includes` and `excludes`.
 
 ##### useEquals
 
@@ -126,9 +126,9 @@ Default: `true`
 
 Setting this to `false` makes it return the key and value as separate array items instead of using a `=` separator in one item. This can be useful for tools that doesn't support `--foo=bar` style flags.
 
-###### Example
-
 ```js
+const dargs = require('dargs');
+
 console.log(dargs({foo: 'bar'}, {useEquals: false}));
 /*
 [
@@ -144,9 +144,9 @@ Default: `false`
 
 Make a single character option key `{a: true}` become a short flag `-a` instead of `--a`.
 
-###### Example
-
 ```js
+const dargs = require('dargs');
+
 console.log(dargs({a: true}, {shortFlag: true}));
 //=> ['-a']
 
@@ -166,19 +166,14 @@ Exclude `false` values. Can be useful when dealing with strict argument parsers 
 Type: `boolean`<br>
 Default: `false`
 
-By default, camelCased keys will be hyphenated. Enabling this will bypass the conversion process.
-
-###### Example
+By default, camel-cased keys will be hyphenated. Enabling this will bypass the conversion process.
 
 ```js
+const dargs = require('dargs');
+
 console.log(dargs({fooBar: 'baz'}));
 //=> ['--foo-bar', 'baz']
 
 console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
 //=> ['--fooBar', 'baz']
 ```
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)

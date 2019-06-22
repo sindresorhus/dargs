@@ -22,6 +22,8 @@ declare namespace dargs {
 
 		@example
 		```
+		import dargs = require('dargs');
+
 		console.log(dargs({foo: 'bar'}, {useEquals: false}));
 		// [
 		// 	'--foo', 'bar'
@@ -37,6 +39,8 @@ declare namespace dargs {
 
 		@example
 		```
+		import dargs = require('dargs');
+
 		console.log(dargs({a: true}, {shortFlag: true}));
 		//=> ['-a']
 
@@ -54,12 +58,14 @@ declare namespace dargs {
 		ignoreFalse?: boolean;
 
 		/**
-		By default, camelCased keys will be hyphenated. Enabling this will bypass the conversion process.
+		By default, camel-cased keys will be hyphenated. Enabling this will bypass the conversion process.
 
 		@default false
 
 		@example
 		```
+		import dargs = require('dargs');
+
 		console.log(dargs({fooBar: 'baz'}));
 		//=> ['--foo-bar', 'baz']
 
@@ -74,7 +80,7 @@ declare namespace dargs {
 /**
 Reverse [`minimist`](https://github.com/substack/minimist). Convert an object of options into an array of command-line arguments.
 
-@param input - Object to convert to command-line arguments.
+@param object - Object to convert to command-line arguments.
 
 @example
 ```
@@ -142,7 +148,7 @@ console.log(dargs({
 ```
 */
 declare function dargs(
-	input: {
+	object: {
 		'--'?: string[];
 		_?: string[];
 	} & {[key: string]: string | boolean | number | readonly string[]},

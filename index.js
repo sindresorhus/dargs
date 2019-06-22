@@ -3,17 +3,18 @@
 const match = (array, value) =>
 	array.some(x => (x instanceof RegExp ? x.test(value) : x === value));
 
-const dargs = (input, options) => {
-	const args = [];
-	let extraArgs = [];
-	let separatedArgs = [];
+const dargs = (object, options) => {
+	const arguments_ = [];
+	let extraArguments = [];
+	let separatedArguments = [];
 
-	options = Object.assign({
+	options = {
 		useEquals: true,
-		shortFlag: false
-	}, options);
+		shortFlag: false,
+		...options
+	};
 
-	const makeArg = (key, value) => {
+	const makeArguments = (key, value) => {
 		const prefix = options.shortFlag && key.length === 1 ? '-' : '--';
 		const theKey = (options.allowCamelCase ?
 			key :
@@ -22,28 +23,26 @@ const dargs = (input, options) => {
 		key = prefix + theKey;
 
 		if (options.useEquals) {
-			args.push(key + (value ? `=${value}` : ''));
+			arguments_.push(key + (value ? `=${value}` : ''));
 		} else {
-			args.push(key);
+			arguments_.push(key);
 
 			if (value) {
-				args.push(value);
+				arguments_.push(value);
 			}
 		}
 	};
 
 	const makeAliasArg = (key, value) => {
-		args.push(`-${key}`);
+		arguments_.push(`-${key}`);
 
 		if (value) {
-			args.push(value);
+			arguments_.push(value);
 		}
 	};
 
-	// TODO: Use Object.entries() when targeting Node.js 8
-	for (let key of Object.keys(input)) {
-		const value = input[key];
-		let pushArg = makeArg;
+	for (let [key, value] of Object.entries(object)) {
+		let pushArguments = makeArguments;
 
 		if (Array.isArray(options.excludes) && match(options.excludes, key)) {
 			continue;
@@ -55,7 +54,7 @@ const dargs = (input, options) => {
 
 		if (typeof options.aliases === 'object' && options.aliases[key]) {
 			key = options.aliases[key];
-			pushArg = makeAliasArg;
+			pushArguments = makeAliasArg;
 		}
 
 		if (key === '--') {
@@ -65,7 +64,7 @@ const dargs = (input, options) => {
 				);
 			}
 
-			separatedArgs = value;
+			separatedArguments = value;
 			continue;
 		}
 
@@ -76,46 +75,46 @@ const dargs = (input, options) => {
 				);
 			}
 
-			extraArgs = value;
+			extraArguments = value;
 			continue;
 		}
 
 		if (value === true) {
-			pushArg(key, '');
+			pushArguments(key, '');
 		}
 
 		if (value === false && !options.ignoreFalse) {
-			pushArg(`no-${key}`);
+			pushArguments(`no-${key}`);
 		}
 
 		if (typeof value === 'string') {
-			pushArg(key, value);
+			pushArguments(key, value);
 		}
 
 		if (typeof value === 'number' && !Number.isNaN(value)) {
-			pushArg(key, String(value));
+			pushArguments(key, String(value));
 		}
 
 		if (Array.isArray(value)) {
 			for (const arrayValue of value) {
-				pushArg(key, arrayValue);
+				pushArguments(key, arrayValue);
 			}
 		}
 	}
 
-	for (const x of extraArgs) {
-		args.push(String(x));
+	for (const argument of extraArguments) {
+		arguments_.push(String(argument));
 	}
 
-	if (separatedArgs.length > 0) {
-		args.push('--');
+	if (separatedArguments.length > 0) {
+		arguments_.push('--');
 	}
 
-	for (const x of separatedArgs) {
-		args.push(String(x));
+	for (const argument of separatedArguments) {
+		arguments_.push(String(argument));
 	}
 
-	return args;
+	return arguments_;
 };
 
 module.exports = dargs;
