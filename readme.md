@@ -142,15 +142,16 @@ console.log(dargs({foo: 'bar'}, {useEquals: false}));
 Type: `boolean`<br>
 Default: `false`
 
-Setting this to `true` makes possible short flags to be returned correctly, meaning that a single character flag like `{a: true}` to become `-a`. When this is set to `false` for `{a: true}` it will result in `--a` instead.
+Make a single character option key `{a: true}` become a short flag `-a` instead of `--a`.
 
 ###### Example
 
 ```js
-console.log(dargs({a: true}, {shortFlag: true}))
-// ['-a']
-console.log(dargs({a: true}))
-// ['--a']
+console.log(dargs({a: true}, {shortFlag: true}));
+//=> ['-a']
+
+console.log(dargs({a: true}));
+//=> ['--a']
 ```
 
 ##### ignoreFalse
