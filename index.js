@@ -10,7 +10,7 @@ const dargs = (object, options) => {
 
 	options = {
 		useEquals: true,
-		shortFlag: false,
+		shortFlag: true,
 		...options
 	};
 

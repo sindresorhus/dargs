@@ -18,14 +18,14 @@ const fixture = {
 
 test('convert options to cli flags', t => {
 	t.deepEqual(dargs(fixture), [
-		'--a=foo',
-		'--b',
+		'-a=foo',
+		'-b',
 		'--no-c',
-		'--d=5',
-		'--e=foo',
-		'--e=bar',
-		'--h=with a space',
-		'--i=let\'s try quotes',
+		'-d=5',
+		'-e=foo',
+		'-e=bar',
+		'-h=with a space',
+		'-i=let\'s try quotes',
 		'--camel-case-camel',
 		'some',
 		'option',
@@ -49,19 +49,19 @@ test('useEquals options', t => {
 	t.deepEqual(dargs(fixture, {
 		useEquals: false
 	}), [
-		'--a',
+		'-a',
 		'foo',
-		'--b',
+		'-b',
 		'--no-c',
-		'--d',
+		'-d',
 		'5',
-		'--e',
+		'-e',
 		'foo',
-		'--e',
+		'-e',
 		'bar',
-		'--h',
+		'-h',
 		'with a space',
-		'--i',
+		'-i',
 		'let\'s try quotes',
 		'--camel-case-camel',
 		'some',
@@ -76,9 +76,9 @@ test('useEquals options', t => {
 
 test('exclude options', t => {
 	t.deepEqual(dargs(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
-		'--a=foo',
+		'-a=foo',
 		'--no-c',
-		'--d=5',
+		'-d=5',
 		'--camel-case-camel',
 		'some',
 		'option',
@@ -92,11 +92,11 @@ test('exclude options', t => {
 
 test('includes options', t => {
 	t.deepEqual(dargs(fixture, {includes: ['a', 'c', 'd', 'e', /^camelCase.*/]}), [
-		'--a=foo',
+		'-a=foo',
 		'--no-c',
-		'--d=5',
-		'--e=foo',
-		'--e=bar',
+		'-d=5',
+		'-e=foo',
+		'-e=bar',
 		'--camel-case-camel'
 	]);
 });
@@ -107,8 +107,8 @@ test('excludes and includes options', t => {
 		includes: ['a', 'c', /^[de]$/, 'camelCaseCamel']
 	}), [
 		'--no-c',
-		'--e=foo',
-		'--e=bar',
+		'-e=foo',
+		'-e=bar',
 		'--camel-case-camel'
 	]);
 });
@@ -121,7 +121,7 @@ test('aliases option', t => {
 	t.deepEqual(dargs({a: 'foo', file: 'test'}, {
 		aliases: {file: 'f'}
 	}), [
-		'--a=foo',
+		'-a=foo',
 		'-f',
 		'test'
 	]);
@@ -135,9 +135,9 @@ test('includes and aliases options', t => {
 		'-a',
 		'foo',
 		'--no-c',
-		'--d=5',
-		'--e=foo',
-		'--e=bar',
+		'-d=5',
+		'-e=foo',
+		'-e=bar',
 		'--camel-case-camel'
 	]);
 });
@@ -146,14 +146,14 @@ test('camelCase option', t => {
 	t.deepEqual(dargs(fixture, {
 		allowCamelCase: true
 	}), [
-		'--a=foo',
-		'--b',
+		'-a=foo',
+		'-b',
 		'--no-c',
-		'--d=5',
-		'--e=foo',
-		'--e=bar',
-		'--h=with a space',
-		'--i=let\'s try quotes',
+		'-d=5',
+		'-e=foo',
+		'-e=bar',
+		'-h=with a space',
+		'-i=let\'s try quotes',
 		'--camelCaseCamel',
 		'some',
 		'option',
@@ -167,10 +167,10 @@ test('camelCase option', t => {
 
 test('shortFlag option', t => {
 	t.deepEqual(dargs({a: 123, b: 'foo', foo: 'bar', camelCaseCamel: true}, {
-		shortFlag: true
+		shortFlag: false
 	}), [
-		'-a=123',
-		'-b=foo',
+		'--a=123',
+		'--b=foo',
 		'--foo=bar',
 		'--camel-case-camel'
 	]);

@@ -35,16 +35,16 @@ declare namespace dargs {
 		/**
 		Make a single character option key `{a: true}` become a short flag `-a` instead of `--a`.
 
-		@default false
+		@default true
 
 		@example
 		```
 		import dargs = require('dargs');
 
-		console.log(dargs({a: true}, {shortFlag: true}));
+		console.log(dargs({a: true}));
 		//=> ['-a']
 
-		console.log(dargs({a: true}));
+		console.log(dargs({a: true}, {shortFlag: false}));
 		//=> ['--a']
 		```
 		*/

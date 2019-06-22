@@ -140,17 +140,17 @@ console.log(dargs({foo: 'bar'}, {useEquals: false}));
 ##### shortFlag
 
 Type: `boolean`<br>
-Default: `false`
+Default: `true`
 
 Make a single character option key `{a: true}` become a short flag `-a` instead of `--a`.
 
 ```js
 const dargs = require('dargs');
 
-console.log(dargs({a: true}, {shortFlag: true}));
+console.log(dargs({a: true}));
 //=> ['-a']
 
-console.log(dargs({a: true}));
+console.log(dargs({a: true}, {shortFlag: false}));
 //=> ['--a']
 ```
 
