@@ -31,6 +31,22 @@ declare namespace dargs {
 		useEquals?: boolean;
 
 		/**
+		Make a single character option key `{a: true}` become a short flag `-a` instead of `--a`.
+
+		@default false
+
+		@example
+		```
+		console.log(dargs({a: true}, {shortFlag: true}));
+		//=> ['-a']
+
+		console.log(dargs({a: true}));
+		//=> ['--a']
+		```
+		*/
+		shortFlag?: boolean;
+
+		/**
 		Exclude `false` values. Can be useful when dealing with strict argument parsers that throw on unknown arguments like `--no-foo`.
 
 		@default false
