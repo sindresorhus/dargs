@@ -72,9 +72,32 @@ declare namespace dargs {
 		console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
 		//=> ['--fooBar', 'baz']
 		```
-		*/
+		 */
 		allowCamelCase?: boolean;
+
+		/**
+		 A map of transformers for preprocessing the value before dargs decides how to serialize it.
+
+		 @default {}
+
+		 @example
+		```
+		import dargs = require('dargs');
+
+		console.log(dargs({fooBar: 3}, {
+			transformers: {
+				fooBar: source => source * 2
+			}
+		}));
+		//=> ['--foo-bar', '6']
+		```
+		 */
+		transformers?: Transformers;
 	}
+}
+
+interface Transformers {
+	[key: string]: {(source: any): any};
 }
 
 /**

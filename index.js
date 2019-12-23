@@ -11,7 +11,16 @@ const dargs = (object, options) => {
 	options = {
 		useEquals: true,
 		shortFlag: true,
+		transformers: {},
 		...options
+	};
+
+	const transformValue = (key, value) => {
+		if (typeof options.transformers[key] === 'function') {
+			return options.transformers[key](value);
+		}
+
+		return value;
 	};
 
 	const makeArguments = (key, value) => {
@@ -78,6 +87,8 @@ const dargs = (object, options) => {
 			extraArguments = value;
 			continue;
 		}
+
+		value = transformValue(key, value);
 
 		if (value === true) {
 			pushArguments(key, '');

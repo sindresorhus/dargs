@@ -84,6 +84,15 @@ console.log(dargs({
 	'-f', 'baz'
 ]
 */
+
+console.log(dargs({
+	foo: 3
+}, {transformers: {foo: source => source * 2}}));
+/*
+[
+	'--foo=6'
+]
+*/
 ```
 
 
@@ -178,6 +187,20 @@ console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
 //=> ['--fooBar', 'baz']
 ```
 
+##### transformers
+
+A map of transformers for preprocessing the value before dargs decides how to serialize it.
+
+```js
+const dargs = require('dargs');
+
+console.log(dargs({fooBar: 3}, {
+    transformers: {
+        fooBar: source => source * 2
+    }
+}));
+//=> ['--foo-bar', '6']
+```
 
 ---
 

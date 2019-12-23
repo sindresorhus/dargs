@@ -23,6 +23,8 @@ expectType<string[]>(dargs(object, {useEquals: false}));
 expectType<string[]>(dargs(object, {shortFlag: true}));
 expectType<string[]>(dargs(object, {ignoreFalse: true}));
 expectType<string[]>(dargs(object, {allowCamelCase: true}));
+expectType<string[]>(dargs(object, {transformers: {something: source => "yep"}}));
 
 expectError(dargs({_: 'foo'}));
 expectError(dargs({'--': 'foo'}));
+expectError<string[]>(dargs(object, {transformers: {something: "nope"}}));

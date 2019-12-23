@@ -175,3 +175,14 @@ test('shortFlag option', t => {
 		'--camel-case-camel'
 	]);
 });
+
+test('transformers option', t => {
+	t.deepEqual(dargs({first: 123, second: {some: 'object'}}, {
+		transformers: {
+			second: source => `'${JSON.stringify(source)}'`
+		}
+	}), [
+		'--first=123',
+		'--second=\'{"some":"object"}\''
+	]);
+});
