@@ -1,4 +1,4 @@
-# dargs [![Build Status](https://travis-ci.org/sindresorhus/dargs.svg?branch=master)](https://travis-ci.org/sindresorhus/dargs)
+# dargs
 
 > Reverse [`minimist`](https://github.com/substack/minimist). Convert an object of options into an array of command-line arguments.
 
