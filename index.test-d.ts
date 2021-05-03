@@ -1,5 +1,5 @@
 import {expectType, expectError} from 'tsd';
-import dargs = require('.');
+import dargs from './index.js';
 
 const object = {
 	_: ['some', 'option'],

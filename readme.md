@@ -4,18 +4,16 @@
 
 Useful when spawning command-line tools.
 
-
 ## Install
 
 ```
 $ npm install dargs
 ```
 
-
 ## Usage
 
 ```js
-const dargs = require('dargs');
+import dargs from 'dargs';
 
 const object = {
 	_: ['some', 'option'],          // Values in '_' will be appended to the end of the generated argument list
@@ -86,7 +84,6 @@ console.log(dargs({
 */
 ```
 
-
 ## API
 
 ### dargs(object, options?)
@@ -121,13 +118,13 @@ Maps keys in `object` to an aliased name. Matching keys are converted to argumen
 
 ##### useEquals
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `true`
 
 Setting this to `false` makes it return the key and value as separate array items instead of using a `=` separator in one item. This can be useful for tools that doesn't support `--foo=bar` style flags.
 
 ```js
-const dargs = require('dargs');
+import dargs from 'dargs';
 
 console.log(dargs({foo: 'bar'}, {useEquals: false}));
 /*
@@ -139,13 +136,13 @@ console.log(dargs({foo: 'bar'}, {useEquals: false}));
 
 ##### shortFlag
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `true`
 
 Make a single character option key `{a: true}` become a short flag `-a` instead of `--a`.
 
 ```js
-const dargs = require('dargs');
+import dargs from 'dargs';
 
 console.log(dargs({a: true}));
 //=> ['-a']
@@ -156,20 +153,20 @@ console.log(dargs({a: true}, {shortFlag: false}));
 
 ##### ignoreFalse
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `false`
 
 Exclude `false` values. Can be useful when dealing with strict argument parsers that throw on unknown arguments like `--no-foo`.
 
 ##### allowCamelCase
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `false`
 
 By default, camel-cased keys will be hyphenated. Enabling this will bypass the conversion process.
 
 ```js
-const dargs = require('dargs');
+import dargs from 'dargs';
 
 console.log(dargs({fooBar: 'baz'}));
 //=> ['--foo-bar', 'baz']
@@ -177,7 +174,6 @@ console.log(dargs({fooBar: 'baz'}));
 console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
 //=> ['--fooBar', 'baz']
 ```
-
 
 ---
 

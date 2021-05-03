@@ -1,9 +1,7 @@
-'use strict';
-
 const match = (array, value) =>
-	array.some(x => (x instanceof RegExp ? x.test(value) : x === value));
+	array.some(element => (element instanceof RegExp ? element.test(value) : element === value));
 
-const dargs = (object, options) => {
+export default function dargs(object, options) {
 	const arguments_ = [];
 	let extraArguments = [];
 	let separatedArguments = [];
@@ -115,6 +113,4 @@ const dargs = (object, options) => {
 	}
 
 	return arguments_;
-};
-
-module.exports = dargs;
+}

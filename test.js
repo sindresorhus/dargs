@@ -1,5 +1,5 @@
 import test from 'ava';
-import dargs from '.';
+import dargs from './index.js';
 
 const fixture = {
 	_: ['some', 'option'],
@@ -38,11 +38,11 @@ test('convert options to cli flags', t => {
 });
 
 test('raises a TypeError if  \'_\' value is not an Array', t => {
-	t.throws(dargs.bind(dargs, {a: 'foo', _: 'baz'}), TypeError);
+	t.throws(dargs.bind(dargs, {a: 'foo', _: 'baz'}), {instanceOf: TypeError});
 });
 
 test('raises a TypeError if  \'--\' value is not an Array', t => {
-	t.throws(dargs.bind(dargs, {a: 'foo', '--': 'baz'}), TypeError);
+	t.throws(dargs.bind(dargs, {a: 'foo', '--': 'baz'}), {instanceOf: TypeError});
 });
 
 test('useEquals options', t => {

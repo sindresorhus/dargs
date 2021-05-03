@@ -1,80 +1,78 @@
-declare namespace dargs {
-	interface Options {
-		/**
-		Keys or regex of keys to exclude. Takes precedence over `includes`.
-		*/
-		excludes?: ReadonlyArray<string | RegExp>;
+export interface Options {
+	/**
+	Keys or regex of keys to exclude. Takes precedence over `includes`.
+	*/
+	readonly excludes?: ReadonlyArray<string | RegExp>;
 
-		/**
-		Keys or regex of keys to include.
-		*/
-		includes?: ReadonlyArray<string | RegExp>;
+	/**
+	Keys or regex of keys to include.
+	*/
+	readonly includes?: ReadonlyArray<string | RegExp>;
 
-		/**
-		Maps keys in `input` to an aliased name. Matching keys are converted to arguments with a single dash (`-`) in front of the aliased key and the value in a separate array item. Keys are still affected by `includes` and `excludes`.
-		*/
-		aliases?: {[key: string]: string};
+	/**
+	Maps keys in `input` to an aliased name. Matching keys are converted to arguments with a single dash (`-`) in front of the aliased key and the value in a separate array item. Keys are still affected by `includes` and `excludes`.
+	*/
+	readonly aliases?: Record<string, string>;
 
-		/**
-		Setting this to `false` makes it return the key and value as separate array items instead of using a `=` separator in one item. This can be useful for tools that doesn't support `--foo=bar` style flags.
+	/**
+	Setting this to `false` makes it return the key and value as separate array items instead of using a `=` separator in one item. This can be useful for tools that doesn't support `--foo=bar` style flags.
 
-		@default true
+	@default true
 
-		@example
-		```
-		import dargs = require('dargs');
+	@example
+	```
+	import dargs from 'dargs';
 
-		console.log(dargs({foo: 'bar'}, {useEquals: false}));
-		// [
-		// 	'--foo', 'bar'
-		// ]
-		```
-		*/
-		useEquals?: boolean;
+	console.log(dargs({foo: 'bar'}, {useEquals: false}));
+	// [
+	// 	'--foo', 'bar'
+	// ]
+	```
+	*/
+	readonly useEquals?: boolean;
 
-		/**
-		Make a single character option key `{a: true}` become a short flag `-a` instead of `--a`.
+	/**
+	Make a single character option key `{a: true}` become a short flag `-a` instead of `--a`.
 
-		@default true
+	@default true
 
-		@example
-		```
-		import dargs = require('dargs');
+	@example
+	```
+	import dargs from 'dargs';
 
-		console.log(dargs({a: true}));
-		//=> ['-a']
+	console.log(dargs({a: true}));
+	//=> ['-a']
 
-		console.log(dargs({a: true}, {shortFlag: false}));
-		//=> ['--a']
-		```
-		*/
-		shortFlag?: boolean;
+	console.log(dargs({a: true}, {shortFlag: false}));
+	//=> ['--a']
+	```
+	*/
+	readonly shortFlag?: boolean;
 
-		/**
-		Exclude `false` values. Can be useful when dealing with strict argument parsers that throw on unknown arguments like `--no-foo`.
+	/**
+	Exclude `false` values. Can be useful when dealing with strict argument parsers that throw on unknown arguments like `--no-foo`.
 
-		@default false
-		*/
-		ignoreFalse?: boolean;
+	@default false
+	*/
+	readonly ignoreFalse?: boolean;
 
-		/**
-		By default, camel-cased keys will be hyphenated. Enabling this will bypass the conversion process.
+	/**
+	By default, camel-cased keys will be hyphenated. Enabling this will bypass the conversion process.
 
-		@default false
+	@default false
 
-		@example
-		```
-		import dargs = require('dargs');
+	@example
+	```
+	import dargs from 'dargs';
 
-		console.log(dargs({fooBar: 'baz'}));
-		//=> ['--foo-bar', 'baz']
+	console.log(dargs({fooBar: 'baz'}));
+	//=> ['--foo-bar', 'baz']
 
-		console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
-		//=> ['--fooBar', 'baz']
-		```
-		*/
-		allowCamelCase?: boolean;
-	}
+	console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
+	//=> ['--fooBar', 'baz']
+	```
+	*/
+	readonly allowCamelCase?: boolean;
 }
 
 /**
@@ -84,7 +82,7 @@ Reverse [`minimist`](https://github.com/substack/minimist). Convert an object of
 
 @example
 ```
-import dargs = require('dargs');
+import dargs from 'dargs';
 
 const input = {
 	_: ['some', 'option'],          // Values in '_' will be appended to the end of the generated argument list
@@ -124,7 +122,6 @@ console.log(dargs(input, {excludes, includes}));
 // 	'--multiple=value2'
 // ]
 
-
 console.log(dargs(input, {includes}));
 // [
 // 	'--camel-case=5',
@@ -133,7 +130,6 @@ console.log(dargs(input, {includes}));
 // 	'--pie-kind=cherry',
 // 	'--sad=:('
 // ]
-
 
 console.log(dargs({
 	foo: 'bar',
@@ -147,12 +143,10 @@ console.log(dargs({
 // ]
 ```
 */
-declare function dargs(
+export default function dargs(
 	object: {
 		'--'?: string[];
 		_?: string[];
-	} & {[key: string]: string | boolean | number | readonly string[]},
-	options?: dargs.Options
+	} & Record<string, string | boolean | number | readonly string[]>,
+	options?: Options
 ): string[];
-
-export = dargs;
