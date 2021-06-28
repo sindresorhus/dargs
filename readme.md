@@ -151,6 +151,13 @@ console.log(dargs({a: true}, {shortFlag: false}));
 //=> ['--a']
 ```
 
+##### ignoreTrue
+
+Type: `boolean`\
+Default: `false`
+
+Exclude `true` values. Can be useful when dealing with argument parsers that only expect negated arguments like `--no-foo`.
+
 ##### ignoreFalse
 
 Type: `boolean`\

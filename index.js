@@ -77,7 +77,7 @@ export default function dargs(object, options) {
 			continue;
 		}
 
-		if (value === true) {
+		if (value === true && !options.ignoreTrue) {
 			pushArguments(key, '');
 		}
 
