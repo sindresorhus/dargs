@@ -50,6 +50,13 @@ export interface Options {
 	readonly shortFlag?: boolean;
 
 	/**
+	Exclude `true` values. Can be useful when dealing with argument parsers that only expect negated arguments like `--no-foo`.
+
+	@default false
+	*/
+	readonly ignoreTrue?: boolean;
+
+	/**
 	Exclude `false` values. Can be useful when dealing with strict argument parsers that throw on unknown arguments like `--no-foo`.
 
 	@default false

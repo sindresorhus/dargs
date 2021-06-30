@@ -21,6 +21,7 @@ expectType<string[]>(dargs(object, {includes}));
 expectType<string[]>(dargs(object, {aliases}));
 expectType<string[]>(dargs(object, {useEquals: false}));
 expectType<string[]>(dargs(object, {shortFlag: true}));
+expectType<string[]>(dargs(object, {ignoreTrue: true}));
 expectType<string[]>(dargs(object, {ignoreFalse: true}));
 expectType<string[]>(dargs(object, {allowCamelCase: true}));
 

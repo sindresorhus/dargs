@@ -113,6 +113,10 @@ test('excludes and includes options', t => {
 	]);
 });
 
+test('option to ignore true values', t => {
+	t.deepEqual(dargs({foo: true}, {ignoreTrue: true}), []);
+});
+
 test('option to ignore false values', t => {
 	t.deepEqual(dargs({foo: false}, {ignoreFalse: true}), []);
 });
