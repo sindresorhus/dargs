@@ -1,6 +1,6 @@
 # dargs
 
-> Reverse [`minimist`](https://github.com/substack/minimist). Convert an object of options into an array of command-line arguments.
+> Reverse [`minimist`](https://github.com/minimistjs/minimist). Convert an object of options into an array of command-line arguments.
 
 Useful when spawning command-line tools.
 
